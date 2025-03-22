@@ -2,10 +2,18 @@
 
 import React, {useState} from 'react';
 
+function displayExpense() {
+
 return ( 
 
-    <div> 
+    <div>
+        <div id="displayContainer">
+            
+            
+            
+        </div> 
 
         
     </div>
 )
+}

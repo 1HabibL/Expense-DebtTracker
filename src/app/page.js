@@ -1,12 +1,17 @@
 "use client";
 
-import ExpesneForm from "./expenseform";
+import ExpenseForm from "./expenseform";
+import NavBar from "./navbar";
+import SideBar from "./sideBar";
 
 export default function Home() {
   return(
     <div>
-      <h1>10G Expense Tracker</h1>
-      <ExpesneForm />
+      <NavBar />
+      <div class="flex">
+      <SideBar />
+      <ExpenseForm />
+      </div>
     </div>
   )
 }

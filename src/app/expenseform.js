@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function ExpenseForm() {
     const [expenses, setExpenses] = useState([])
@@ -11,6 +11,22 @@ function ExpenseForm() {
     const [additionalNotes, setAdditionalNotes] = useState("")
 
 
+//load stored data from localStorage
+
+useEffect(() => {
+    const savedData = localStorage.getItem("submittedExpenseData");
+    if (savedData){
+        setExpenses(JSON.parse(savedData))
+    }
+}, []);
+
+//Update localstorage whenever expenses changes
+
+useEffect(() =>{
+    localStorage.setItem("submittedExpenseData", JSON.stringify(expenses))
+}, [expenses])
+
+//function to clear form inputes
     const clearedExpense = () => {
         setAmount("");
         setCategory("");
@@ -18,7 +34,7 @@ function ExpenseForm() {
         setAdditionalNotes("");
         setExpenseName("");
      }
-
+//function to handle form submission
         const newExpense =  (event) => {
             event.preventDefault(); //
 
@@ -35,11 +51,23 @@ function ExpenseForm() {
 
         }
 
-    
+        //function to delete selected expense 
+        const handleDelete = (index) => {
+            const newExpenses = expenses.filter((_, i) => i !== index);
+            setExpenses(newExpenses)
+        } 
+//function to clear all stored data
+const clearData = () =>{
+    localStorage.removeItem("submittedExpenseData")
+    setExpenses([]);
+}
+
+
+        //localStorage code
 
     return (
         <div>
-            <p>Expensee Form</p>
+            <p>Expense Form</p>
             <form onSubmit={newExpense} >
             <label id="expense-name">Expense Name</label>
             <input value={expenseName} onChange={(e) => setExpenseName(e.target.value)} className="outline-1" type="text" name="expenseName" id="expenseName" />
@@ -68,7 +96,7 @@ function ExpenseForm() {
                 {expenses.map((expense, index) => (
                     <li key={index}>
                         {expense.expenseName} - ${expense.amount} ({expense.category})
-                        <button onClick={() => handleDelete(index)}>Delete</button>
+                        <button onClick={clearData}>Delete</button>
                     </li>
                     
                 ))}
