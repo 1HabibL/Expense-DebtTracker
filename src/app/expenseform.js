@@ -2,26 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 
-function ExpenseForm() {
-    const [expenses, setExpenses] = useState([])
+function ExpenseForm({ expenses, setExpenses }) {
+    //const [expenses, setExpenses] = useState([])
     const [expenseName, setExpenseName] = useState("");
     const [amount, setAmount] = useState("")
     const [category, setCategory] =useState("")
     const [date, setDate] = useState("")
     const [additionalNotes, setAdditionalNotes] = useState("")
-
-
 //load stored data from localStorage
-
 useEffect(() => {
     const savedData = localStorage.getItem("submittedExpenseData");
-    if (savedData){
+    if (savedData) {
         setExpenses(JSON.parse(savedData))
     }
 }, []);
 
 //Update localstorage whenever expenses changes
-
 useEffect(() =>{
     localStorage.setItem("submittedExpenseData", JSON.stringify(expenses))
 }, [expenses])
@@ -46,11 +42,10 @@ useEffect(() =>{
             additionalNotes: additionalNotes
         }
 
-        setExpenses([...expenses, passedData])
+        setExpenses((prevData) => [...expenses, passedData])
          clearedExpense()
 
         }
-
         //function to delete selected expense 
         const handleDelete = (index) => {
             const newExpenses = expenses.filter((_, i) => i !== index);
@@ -61,8 +56,6 @@ const clearData = () =>{
     localStorage.removeItem("submittedExpenseData")
     setExpenses([]);
 }
-
-
         //localStorage code
 
     return (
@@ -93,7 +86,7 @@ const clearData = () =>{
             </form>
 
             <ul>
-                {expenses.map((expense, index) => (
+                {Array.isArray(expenses) && expenses.map((expense, index) => (
                     <li key={index}>
                         {expense.expenseName} - ${expense.amount} ({expense.category})
                         <button onClick={clearData}>Delete</button>
@@ -108,7 +101,5 @@ const clearData = () =>{
 )
 
 }
-
-
 
 export default ExpenseForm;
