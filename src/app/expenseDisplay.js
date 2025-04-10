@@ -48,8 +48,8 @@ return (
             <input type="number"></input>
         </form>
 
-        <div id="displayContainer" className='bg-gray-700'>
-            <p>{expenseDisplay}</p>  
+        <div id="displayContainer" className='bg-white rounded'>
+            <p className='text-7xl'>{expenseDisplay}</p>  
         </div> 
     </div>
 )
