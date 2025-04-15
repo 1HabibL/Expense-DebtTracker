@@ -42,15 +42,14 @@ const calculateExpenses = (dataArray) => {
 }*/
 
 return ( 
-    <div>
-        <form>
-            <label>Amount</label>
-            <input type="number"></input>
-        </form>
-
-        <div id="displayContainer" className='bg-white rounded'>
+    <div className='bg-[#f8f9fa] w-200 h-100 shadow-lg rounded-2xl'>
+        <p className='text-2xl mt-3.5 ml-3.5 bold font-medium'>Total Spend</p>  
+    <div id="mainDiv" className='flex flex-col items-center justify-center mt-5 h-50'>
+        <div id="displayContainer" className='w-100 rounded  flex items-center  flex-col'>
+        <p className='text-2xl'>Total</p>  
             <p className='text-7xl'>{expenseDisplay}</p>  
         </div> 
+    </div>
     </div>
 )
 }
