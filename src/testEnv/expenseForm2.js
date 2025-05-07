@@ -10,23 +10,15 @@ function ExpenseForm({ expenses, setExpenses }) {
     const [date, setDate] = useState("")
     const [additionalNotes, setAdditionalNotes] = useState("")
     const [isHidden,setIsHidden] = useState(true)
-    const [filterIsHidden, setFilterIsHidden] = useState(true)
 //function for hiding and veiwing expense form
 const handleClick = () => {
     setIsHidden(!isHidden)
 };
 
-const handleClickFilter = () => {
-    setFilterIsHidden(!filterIsHidden)
-}
-
-//save  expense forms isHidden state to localStorage
+//save isHidden state to localStorage
 useEffect(() => {
     localStorage.setItem("formHidden", JSON.stringify(isHidden));
 }, [isHidden]);
-
-//save filter forms isHidden state to localStorage
-
 
 //load stored data from localStorage
 useEffect(() => {
@@ -83,15 +75,14 @@ const clearData = () =>{
         //localStorage code
 
     return (
-        <div className='flex my-5 flex-col justify-center items-center w-1/3 overflow-hidden'>
-             <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
+        <div className='flex flex-col justify-center items-center bg-blue-300 w-1/3 overflow-hidden'>
           
-           <button className="text-white rounded px-4 bg-blue-500 py-3 mt-4" onClick={handleClick}>Add Expense</button>
-            <form id="expenseDataForm" className={`my-4 shadow-md rounded p-4 bg-white transform transition-all duration-500 ease-in-out origin-top
+           <button className="text-white rounded px-4 bg-blue-500  py-3" onClick={handleClick}
+           >Add Expense</button>
+           {isHidden !== null && (
+            <form className={`my-4 shadow-md rounded p-4 bg-white transform transition-all duration-500 ease-in-out origin-top
      ${isHidden 
-      ? 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none max-h-0'
+      ? 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none'
       : 'opacity-100 translate-y-0 scale-y-100 pointer-events-auto'
     }`}  
             onSubmit={newExpense} >
@@ -125,58 +116,16 @@ const clearData = () =>{
             
             </form>
             
-
-        <div className="my-4 w-99/100 bg-[#f8f9fa] flex flex-col shadow-lg justify-center items-center rounded-lg p-6" id='expenseTextList'>
-        <div className='flex w-99/100'>
-        <h1 className="self-start ml-14.5 mt-4 mb-4 font-semibold text-2xl">Expenses</h1>
-        <button class="ml-auto text-xl mr-14.5 p-2 py-0 bg-gray-300 rounded-lg hover:bg-gray-600" onClick={handleClickFilter} id="resetFilterBtn">filter_alt</button>
-        </div>  
-
-
-        <div id="filterFormContainer" className={`bg-gray-200 w-8/10 m-4 
-        ${filterIsHidden
-            ? 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none max-h-0'
-            : 'opacity-100 translate-y-0 scale-y-100 pointer-events-auto'
-
-        }`}>
-        <form className='flex ml-4 mr-4 justify-center'>
-             
-            <div id="nameFilter" className='flex flex-col ml-4 mr-4 mt-1 mb-2'>
-            <label className='block text-lg font-medium'>Expense Name</label>
-            <input type="text" className='rounded-l shadow-md bg-white focus:outline-none fcous-ring-2'></input>
-            </div>
-
-            <div id="categoryFilter" className='flex flex-col ml-4 mr-4 mt-1 mb-2'>
-            <label className='block text-lg font-medium'>Category</label>
-            <select id="expenseCategory" className='rounded-l shadow-md bg-white '>
-                <option value="all">All</option>
-                <option value="Food">Food</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Utilities">Utilities</option>
-                <option value="Health">Health</option>
-                <option value="Insurance">Insurance</option>
-                <option value="Education">Education</option>
-                <option value="Rent">Rent</option>
-                <option value="Miscellaneous">Miscellaneous</option>
-            </select>
-            </div>
-
-            <div id="dateFilter" className='flex flex-col ml-4 mr-4 mt-1 mb-2'>
-            <label className='block text-lg font-medium'>Date</label>
-            <input type="date" className='rounded-l shadow-md bg-white'></input>
-            </div>
-        </form>
-        </div> 
-            
-            <ul className='flex flex-col justify-center items-center w-6/7'>
+)}
+        <div className="my-4 bg-gray-100 rounded" id='expenseTextList'>
+            <ul>
                 {Array.isArray(expenses) && expenses.map((expense, index) => (
-                    <li className='text-2xl my-2 flex bg-[#f8f9fa] px-4  py-2 items-center gap-4 shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300 w-[100%]' key={index}>
-                        <div className="font-semibold bg-blue-100 flex-1">{expense.expenseName}</div>  
+                    <li className='text-2xl flex bg-[#f8f9fa] px-4 py-2 items-center gap-4 shadow-md' key={index}>
+                        <div className="bg-blue-100 flex-1">{expense.expenseName}</div>  
                         <div className="bg-purple-100 flex-1">${expense.amount}</div> 
                         <div className="bg-yellow-100 flex-1">{expense.category}</div> 
-                        <div className="text-md text-gray-500 bg-yellow-100 flex-1">{expense.date}</div> 
-                        <button className="bg-red-300 rounded flex-1"onClick={() => handleDelete(index)}><span className="material-symbols-outlined">delete</span></button>
+                        <div className="bg-yellow-100 flex-1">{expense.date}</div> 
+                        <button className="bg-red-300 rounded flex-1"onClick={() => handleDelete(index)}>Delete</button>
                     </li>
                     
                 ))}
