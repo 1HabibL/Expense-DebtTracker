@@ -11,6 +11,12 @@ function ExpenseForm({ expenses, setExpenses }) {
     const [additionalNotes, setAdditionalNotes] = useState("")
     const [isHidden,setIsHidden] = useState(true)
     const [filterIsHidden, setFilterIsHidden] = useState(true)
+    //filter use states
+    const [filterName, setFilterName] = useState("")
+    const [filterCategory, setFilterCategory] = useState("")
+    const [filterDate, setfilterDate] = useState("")
+    const [filteredExpenses, setFilteredExpenses] = useState("")
+
 //function for hiding and veiwing expense form
 const handleClick = () => {
     setIsHidden(!isHidden)
@@ -66,7 +72,7 @@ useEffect(() =>{
             additionalNotes: additionalNotes
         }
 
-        setExpenses((prevData) => [...expenses, passedData])
+        setExpenses((prevData) => [...prevData, passedData])
          clearedExpense()
 
         }
@@ -81,6 +87,13 @@ const clearData = () =>{
     setExpenses([]);
 }
         //localStorage code
+
+        //Function to filter
+
+        const appliedFilter = () => {
+
+            
+        }
 
     return (
         <div className='flex my-5 flex-col justify-center items-center w-1/3 overflow-hidden'>
@@ -131,9 +144,7 @@ const clearData = () =>{
         <h1 className="self-start ml-14 mt-4 mb-4 font-semibold text-3xl">Expenses</h1>
         <button className="ml-auto text-xl mr-14 p-4 my-2 bg-gray-300 rounded-lg hover:bg-gray-600 text-white shadow-md transition flex items-center justify-center" onClick={handleClickFilter} id="resetFilterBtn"><span className="material-symbols-outlined text-2xl">filter_alt</span></button>
         </div>  
-
-
-        <div id="filterFormContainer" className={`bg-gray-200 w-8/10 m-4 flex flex-col items-center 
+        <div id="filterFormContainer" className={`bg-[#f8f9fa] shadow-lg rounded-2xl w-8/10 flex flex-col items-center
         ${filterIsHidden
             ? 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none max-h-0'
             : 'opacity-100 translate-y-0 scale-y-100 pointer-events-auto'
@@ -163,11 +174,11 @@ const clearData = () =>{
 
           
             </div>
-
             <div id="dateFilter" className='flex flex-col ml-4 mr-4 mt-1 mb-2'>
             <label className='block text-lg font-medium'>Date</label>
             <input type="date" className='rounded-l shadow-md bg-white'></input>
             </div>
+           
         </form>
 
         <div id="filterFormButtons" className='flex flex-row flex-wrap gap-4 mt-4 mb-4'>
@@ -175,8 +186,16 @@ const clearData = () =>{
                     <button type="button" className='bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-6 rounded-xl shadow-md hover:shadow-lg transition duration-200'>Reset Filters</button>
                 </div>
         </div> 
+
+    
             
             <ul className='flex flex-col justify-center items-center w-6/7'>
+
+
+                
+                
+                
+                
                 {Array.isArray(expenses) && expenses.map((expense, index) => (
                     <li className='text-2xl my-2 flex bg-[#f8f9fa] px-4  py-2 items-center gap-4 shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300 w-[100%]' key={index}>
                         <div className="font-semibold bg-blue-100 flex-1">{expense.expenseName}</div>  
@@ -187,6 +206,11 @@ const clearData = () =>{
                     </li>
                     
                 ))}
+
+
+
+
+
             </ul>
             </div>
         </div>
