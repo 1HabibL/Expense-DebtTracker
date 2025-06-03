@@ -4,15 +4,21 @@ import React, { useEffect, useState } from "react";
 
 function SideBar() {
 return(
-    <div>
-        <nav className="h-screen w-48 bg-gray-900 p-4">
-            <ul className="text-white">
-                <li className="text-white mx-4">Dashboard</li>
-                <li className="text-white mx-4">History</li>
-                <li className="text-white mx-4">Cards</li>
-            </ul>
-        </nav>
-    </div>
+<div>
+  <nav className="h-screen w-56 bg-gradient-to-b from-slate-800 to-slate-700 text-white shadow-xl px-6 py-8">
+    <ul className="space-y-8 text-lg font-medium tracking-wide">
+      <li className="hover:text-cyan-300 transition duration-200 cursor-pointer">
+        Dashboard
+      </li>
+      <li className="hover:text-cyan-300 transition duration-200 cursor-pointer">
+        History
+      </li>
+      <li className="hover:text-cyan-300 transition duration-200 cursor-pointer">
+        Cards
+      </li>
+    </ul>
+  </nav>
+</div>
 )
 }
 

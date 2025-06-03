@@ -41,16 +41,19 @@ const calculateExpenses = (dataArray) => {
     let totalSum = array.reduce((total, item) => total + item.amount) 
 }*/
 
-return ( 
-    <div className='bg-[#f8f9fa] w-200 h-100 shadow-lg rounded-2xl'>
-        <p className='text-2xl mt-3.5 ml-3.5 bold font-medium'>Total Spend</p>  
-    <div id="mainDiv" className='flex flex-col items-center justify-center mt-5 h-50'>
-        <div id="displayContainer" className='w-100 rounded  flex items-center  flex-col'>
-        <p className='text-2xl'>Total</p>  
-            <p className='text-7xl'>{expenseDisplay}</p>  
-        </div> 
-    </div>
-    </div>
+return (
+<div className="w-full max-w-xl  mx-auto bg-gradient-to-br from-indigo-900 via-purple-800 to-red-700 rounded-3xl shadow-2xl  p-16  mt-20 text-white">
+  <h2 className="text-2xl font-medium text-center mb-5 tracking-wide">
+    Total Spend
+  </h2>
+
+  <p className="text-center text-[5rem] font-light leading-none">
+    ${expenseDisplay}
+  </p>
+
+
+</div>
+
 )
 }
 export default DisplayExpense
