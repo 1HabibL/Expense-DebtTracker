@@ -1,5 +1,7 @@
 "use client";
 import {useState} from "react";
+
+import DashBoard from './dashboard/page'; 
 import ExpenseForm from "./expenseform";
 import NavBar from "./navbar";
 import SideBar from "./sideBar";
