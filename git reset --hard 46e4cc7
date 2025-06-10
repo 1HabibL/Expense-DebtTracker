@@ -1,0 +1,13 @@
+[33m46e4cc7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m created dashboard that displays visual data
+[33m92a06a4[m Implemented FIlter feature:
+[33m96f85ad[m -CLEANED UP A LOT OF CODE, REMOVING TECHNICAL DEBT
+[33mcf5aa32[m Initiated Edit button feature, created Use states and edit button
+[33med4a7db[m Initiated Filter Feature Components
+[33m28f0564[m implemented filter form buttons
+[33m14bcc56[m New Additions: -Imported google fonts icon library
+[33m514a90d[m Updated form to remain hidden until user wants to add new expense, form disappears when new expense is added, form visibilty is saved in local storage memory so app remembers form is hidden and doesnt reapper when page is refreshed
+[33m48a6dc6[m Redesigned Expense table for proper alignment
+[33m4e7f360[m -Fixed Form Functionality -Able to add total expenses and display them
+[33md12f744[m Updates: -Added local storage features: Save to local storag, load from local storage, delete from local storage
+[33mff22a78[m Developing a budget tracker. Update 1: -created the form -able to submit form to pass data as an object -form is able to reset after submission
+[33m325a7cb[m Initial commit from Create Next App
