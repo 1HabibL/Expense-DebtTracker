@@ -3,7 +3,7 @@
 import React from 'react'
 import {useState} from "react";
 import ExpenseForm from './expenseform';
-
+import { categoryProcessing } from './chartData.js'
 
 
 import {Pie} from "react-chartjs-2"
@@ -21,17 +21,38 @@ import {Chart as ChartJS,
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement,LineElement,Title)
 
-export default function DashBoard() {
-    const [expenses, setExpenses] = useState([]);
+export default function DashBoard({expenses}) {
+    
     const dummyExpenseList =[
         {rent: 1800},
         {car: 700},
-        {food: 500}
+        {food: 500},
+        {transportation: 0}
     ]
 
-    // concert data into chart format
-    const labels = dummyExpenseList.map((item) => Object.keys(item)[0]);
-    const dataValues = dummyExpenseList.map((item) => Object.values(item)[0])
+const expenseArch = [
+{expenseName: 'Popeyes', amount: 25, category: 'Food', date: '2025-06-04', additionalNotes: ''},
+{expenseName: 'ttc', amount: 25, category: 'Transportation', date: '2025-06-04', additionalNotes: ''},
+{expenseName: 'winter tires', amount: 25, category: 'Transportation', date: '2025-06-11', additionalNotes: ''},
+{expenseName: 'medecine', amount: 25, category: 'Health', date: '2025-06-24', additionalNotes: ''},
+{expenseName: 'medecine', amount: 25, category: 'rent', date: '2025-06-24', additionalNotes: ''},
+{expenseName: 'medecine', amount: 25, category: 'utilities', date: '2025-06-24', additionalNotes: ''},
+]
+
+ 
+
+
+    const expenseGraphing = expenses;
+
+    // convert data into chart format
+const refinedCategory = categoryProcessing(expenses);
+const labels = refinedCategory.map((item) => item.newCategory);
+const dataValues = refinedCategory.map((item) => item.amount);
+    //expense form data  for pie chart
+    // loop through all expenses categorys and add up all categories sums
+
+    
+
 
     const chartData = {
         labels: labels,
@@ -41,7 +62,14 @@ export default function DashBoard() {
               backgroundColor: [
                 "#4ade80", // green
                 "#60a5fa", // blue
-                 "#facc15"  // yellow
+                 "#facc15",  // yellow
+                 "#A020F0" , //purple
+                 "#ff9b9b" ,//red
+                 "#fbc3b0",//pastel orange
+                 "#aaaaaa", //pastel gray
+                 "#a08f61", //swamp
+                 "#343b34", //decay black
+
               ],
               borderColor: '#fff',
               borderWidth: 1  

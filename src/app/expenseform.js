@@ -106,6 +106,7 @@ useEffect(() =>{
         setExpenses((prevData) => [...prevData, passedData])
          clearedExpense()
 
+         console.log("expenses array:",expenses)
         }
         //function to delete selected expense 
         const handleDelete = (index) => {
