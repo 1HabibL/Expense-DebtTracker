@@ -79,7 +79,7 @@ if(savedFilters){
 }, []);
 
 //Update localstorage whenever expenses changes
-useEffect(() =>{
+useEffect(() => {
     localStorage.setItem("submittedExpenseData", JSON.stringify(expenses))
 }, [expenses])
 

@@ -3,7 +3,7 @@
 import React from 'react'
 import {useState} from "react";
 import ExpenseForm from './expenseform';
-import { categoryProcessing } from './chartData.js'
+import { categoryProcessing, dateProcessing } from './chartData.js'
 
 
 import {Pie} from "react-chartjs-2"
@@ -53,6 +53,12 @@ const dataValues = refinedCategory.map((item) => item.amount);
 
     
 
+      // convert data into line chart format
+
+const refinedDate = dateProcessing(expenses)
+const dateLabels = refinedDate.map((item) => item.date)
+const dataDataValues = refinedDate.map((item) => item.amount)
+
 
     const chartData = {
         labels: labels,
@@ -77,10 +83,10 @@ const dataValues = refinedCategory.map((item) => item.amount);
         ]
     }
     const lineChartData = {
-        labels: ["January", "February", "March"],
+        labels: dateLabels, //["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         datasets: [
             {label: "Monthly Expenses",
-                data: [2400, 2100, 2500],
+                data: dataDataValues, //[2400, 2100, 2500]
                 fill: false,
                 borderColor: "#60a5fa",// nice blue
                 tension: 0.3
@@ -89,21 +95,29 @@ const dataValues = refinedCategory.map((item) => item.amount);
     }
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-           
-           <div id="graphContainer" className='flex'>
-          
-           <div className='max-w-xl mx-auto bg-white p-4 rounded-lg shadow'>
-                <h2 className='text-xl font-semibold mb-2'>Monthly Expense Trend</h2>
-                <Line data={lineChartData} />
-            </div>
-            
-            <div className='max-w-md mx-auto bg-white p4 rounded-lg shadow'>
-                <Pie data={chartData} />
-            </div>
-            </div>
-        </div>
+   <div className="w-full px-4 py-8">
+  <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
+
+  <div id="graphContainer" className="flex flex-col lg:flex-row gap-8 justify-center items-center bg-gradient-to-br from-gray-300 via-white to-gray-300 p-6 rounded-xl shadow-inner">
+    
+    {/* Line Chart */}
+    <div className="flex flex-col items-center justify-center w-full h-[500px] max-w-2xl bg-white p-6 rounded-xl shadow-lg">
+      <h2 className="text-3xl font-semibold mb-4 text-center">📈 Monthly Expense Trend</h2>
+      <Line data={lineChartData} />
+    </div>
+
+    {/* Pie Chart */}
+    <div className="w-full max-w-md h-[500px] bg-white p-6 rounded-xl shadow-lg flex items-center justify-center">
+      <div className="w-full">
+        <h2 className="text-2xl font-semibold mb-4 text-center">🧁 Category Breakdown</h2>
+        <Pie data={chartData} />
+      </div>
+    </div>
+
+{/* Pie Chart */}
+
+  </div>
+</div>
 
     )
 }

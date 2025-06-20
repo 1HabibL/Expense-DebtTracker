@@ -1,5 +1,5 @@
 "use client";
-import {Component, useState} from "react";
+import {Component, useEffect, useState} from "react";
 
 import DashBoard from './dashBoard'; 
 import ExpenseForm from "./expenseform";
@@ -11,11 +11,7 @@ import DisplayExpense from "./expenseDisplay";
 export default function Home() {
 const [expenses, setExpenses] = useState([]);
 const [designatedComponent, setdesignatedComponent] = useState("home")
-
-
-
 //const [activeComponent, setActiveComponent] = useState(expenseDisplay);
-
 const [displaySum, setdisplaySum] = useState(true)
 const [displayDashboard, setdisplayDashboard ] = useState(false)
 const [displayCards, setdisplayCards ] = useState(false)
@@ -34,6 +30,18 @@ const appComponents = [
 ]
 
 const decidedComponent = appComponents.filter((compDisplay) => compDisplay.id == designatedComponent)
+
+useEffect(() => {
+  const targetComponent = localStorage.getItem("targetComponent");
+  if (targetComponent){
+    setdesignatedComponent(targetComponent)
+  }
+}, [])
+
+//Save components whenever it changes
+useEffect(() => {
+  localStorage.setItem('targetComponent', designatedComponent)
+}, [designatedComponent])
 
 //<div className="absolute top-0 left-48 w-[30%] h-[100%]  bg-gradient-to-r from-purple-700 via-red-500 to-white z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}></div>
   // <DisplayExpense id="expenseDisplay"  expenses={expenses}/>
