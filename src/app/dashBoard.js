@@ -39,10 +39,7 @@ const expenseArch = [
 {expenseName: 'medecine', amount: 25, category: 'utilities', date: '2025-06-24', additionalNotes: ''},
 ]
 
- 
-
-
-    const expenseGraphing = expenses;
+const expenseGraphing = expenses;
 
     // convert data into chart format
 const refinedCategory = categoryProcessing(expenses);
@@ -95,10 +92,10 @@ const dataDataValues = refinedDate.map((item) => item.amount)
     }
 
     return (
-   <div className="w-full px-4 py-8">
-  <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
+   <div className="w-full py-4">
+  <h1 className="text-3xl font-bold text-center mb-4">Dashboard</h1>
 
-  <div id="graphContainer" className="flex flex-col lg:flex-row gap-8 justify-center items-center bg-gradient-to-br from-gray-300 via-white to-gray-300 p-6 rounded-xl shadow-inner">
+  <div id="graphContainer" className="flex flex-col lg:flex-row gap-8 justify-center items-center bg-gradient-to-br from-gray-300 via-white to-gray-300 p-4 rounded-xl shadow-inner">
     
     {/* Line Chart */}
     <div className="flex flex-col items-center justify-center w-full h-[500px] max-w-2xl bg-white p-6 rounded-xl shadow-lg">

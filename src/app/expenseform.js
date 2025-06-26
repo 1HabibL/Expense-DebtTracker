@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import InputForm from './inputForm';
 
 function ExpenseForm({ expenses, setExpenses }) {
     //const [expenses, setExpenses] = useState([])
@@ -27,29 +28,11 @@ function ExpenseForm({ expenses, setExpenses }) {
      const [editedDate, setEditedDate] = useState ("")
      const [editIndex, setEditIndex] = useState(null);
 
-     //Applied Filter UI Categories
-     const [displayUIFilters, setdisplayUIFilters] = ("")
-     const [filterNameUI, setfilterNameUI] = useState ("")
-     const [filterCategoryUI, setfilterCategoryUI] = useState ("")
-     const [filterDateUI, setDateUI] = useState ("")
 
-
-//function for hiding and veiwing expense form
-const handleClick = () => {
-    setIsHidden(!isHidden)
-};
-
+//function for hiding and veiwing filter form
 const handleClickFilter = () => {
     setFilterIsHidden(!filterIsHidden)
 }
-
-//save  expense forms isHidden state to localStorage
-useEffect(() => {
-    localStorage.setItem("formHidden", JSON.stringify(isHidden));
-}, [isHidden]);
-
-//save filter forms isHidden state to localStorage
-
 
 //load stored data from localStorage
 useEffect(() => {
@@ -57,12 +40,6 @@ useEffect(() => {
     if (savedData) {
         setExpenses(JSON.parse(savedData))
     }
-
-const storedVisibility = localStorage.getItem("formHidden");
-if (storedVisibility !== null) {
-    setIsHidden(JSON.parse(storedVisibility))
-}
-
 
 const savedFilters = localStorage.getItem("expenseFilter");
 if(savedFilters){
@@ -80,8 +57,10 @@ if(savedFilters){
 
 //Update localstorage whenever expenses changes
 useEffect(() => {
+  if (expenses.length > 0) {
     localStorage.setItem("submittedExpenseData", JSON.stringify(expenses))
-}, [expenses])
+}}, [expenses])
+
 
 //function to clear form inputes
     const clearedExpense = () => {
@@ -157,7 +136,6 @@ const clearData = () =>{
 
   
  //Function to edit Expenses in Expense LIst
-
  const handleEdit = (index) => {
     // Copy of current expenses array
     const updatedExpenses = [...expenses];
@@ -196,135 +174,18 @@ const cancelEdit = (index) => {
 }
  
     return (
-        <div className='flex my-5 flex-col justify-center items-center w-1/3 overflow-hidden'>
+        <div className=' w-3/4'>
              <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
             
-            <div className={`w-full flex flex-col items-center transition-all duration-500 ease-in-out ${isHidden ? "gap-4" : "gap-12"}`} id="newExpenseFormAndExpenseListContainer">
-          
-           <button className="text-white rounded px-4 bg-blue-500 py-3" onClick={handleClick}>New Expense</button>
-           <form
-  id="expenseDataForm"
-  className={`bg-white shadow-xl rounded-2xl p-5 transition-all duration-500 ease-in-out transform origin-top overflow-hidden
-    ${isHidden
-      ? 'opacity-0 -translate-y-4 scale-y-95 pointer-events-none h-0'
-      : 'opacity-100 translate-y-0 scale-y-100 pointer-events-auto h-auto'
-    }`}
-  onSubmit={newExpense}
->
-  {/* Section 1 */}
-  <div className="grid md:grid-cols-2 gap-6 mb-4">
-    <div className="flex flex-col">
-      <label htmlFor="expenseName" className="text-sm font-medium text-gray-700 mb-2">
-        Expense Name
-      </label>
-      <input
-        value={expenseName}
-        onChange={(e) => setExpenseName(e.target.value)}
-        type="text"
-        name="expenseName"
-        id="expenseName"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-        placeholder="e.g. Coffee, Rent"
-      />
-    </div>
-
-    <div className="flex flex-col">
-      <label htmlFor="amount" className="text-sm font-medium text-gray-700 mb-2">
-        Amount
-      </label>
-      <input
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        type="number"
-        name="amount"
-        id="amount"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-        placeholder="e.g. 25.00"
-      />
-    </div>
-  </div>
-
-  {/* Section 2 */}
-  <div className="grid md:grid-cols-2 gap-6 mb-4">
-    <div className="flex flex-col">
-      <label htmlFor="category" className="text-sm font-medium text-gray-700 mb-2">
-        Category
-      </label>
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        name="category"
-        id="category"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      >
-        <option value="">Select</option>
-        <option value="Food">Food</option>
-        <option value="Transportation">Transportation</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Utilities">Utilities</option>
-        <option value="Health">Health</option>
-        <option value="Insurance">Insurance</option>
-        <option value="Education">Education</option>
-        <option value="Rent">Rent</option>
-        <option value="Miscellaneous">Miscellaneous</option>
-      </select>
-    </div>
-
-    <div className="flex flex-col">
-      <label htmlFor="date" className="text-sm font-medium text-gray-700 mb-2">
-        Date
-      </label>
-      <input
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        type="date"
-        name="date"
-        id="date"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      />
-    </div>
-  </div>
-
-  {/* Section 3 */}
-  <div className="mb-4">
-    <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
-      Additional Notes
-    </label>
-    <input
-      value={additionalNotes}
-      onChange={(e) => setAdditionalNotes(e.target.value)}
-      type="text"
-      name="additionalNotes"
-      id="additionalNotes"
-      className="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      placeholder="Optional"
-    />
-  </div>
-
-  {/* Buttons */}
-  <div className="flex flex-wrap gap-4">
-    <button
-      type="submit"
-      className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-      onClick={handleClick}
-    >
-      Add Expense
-    </button>
-    <button
-      type="button"
-      onClick={handleClick}
-      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-    >
-      Cancel
-    </button>
-  </div>
-</form>
+  {/* EXPENSE LIST STARTES HERE */}
+  
+  {/* EXPENSE LIST STARTES HERE */}
 
 <div
   id="expenseTextList"
-  className="my-8 w-full max-w-5xl mx-auto bg-white shadow-xl rounded-3xl p-8"
+  className="my-8 w-full bg-white shadow-xl rounded-3xl p-8"
 >
   {/* Header Section */}
   <div className="flex items-center justify-between mb-6">
@@ -579,7 +440,7 @@ const cancelEdit = (index) => {
   </div>
 </div>
 
-            </div>
+           
         </div>
 
 
