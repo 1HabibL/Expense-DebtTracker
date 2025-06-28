@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import ExpenseForm from './expenseform';
-import {monthlySums, convertDates} from './TotalSum.js'
+import {monthlySums, convertDates, getWeekOf, weeklySums} from './TotalSum.js'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 
@@ -41,7 +41,9 @@ const calculateExpenses = (dataArray) => {
 }
  let presentMonthSum = monthlySums(expenses)
  console.log('PRESENT MONTHS SUM', presentMonthSum)
-
+ let todaysDate = new Date()
+let weeklyAmount = weeklySums(expenses ,todaysDate)
+ 
 return (
 <div className="w-full py-10 bg-gray-50">
   <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">💸 Expense Dashboard</h1>
@@ -72,7 +74,8 @@ return (
       {/* Weekly Expense */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Weekly Expense</h2>
-        <p className="text-4xl font-bold text-blue-400">${presentMonthSum[0].amount}</p>
+        <p className="text-4xl font-bold text-blue-400">${weeklyAmount[1].weeklyAmount}</p>
+        <p className="text-xl font-bold ">{weeklyAmount[0].startingDay} - {weeklyAmount[0].endingDay}</p>
       </div>
 
       {/* Today's Spending */}
