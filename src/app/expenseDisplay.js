@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import ExpenseForm from './expenseform';
-import {monthlySums, convertDates, getWeekOf, weeklySums} from './TotalSum.js'
+import {monthlySums, convertDates, getWeekOf, weeklySums, annualSums, todaysSums} from './TotalSum.js'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 
@@ -39,11 +39,12 @@ const calculateExpenses = (dataArray) => {
     console.log("Calculated total:", total)
     setExpenseDisplay(total)
 }
+let todaysDate = new Date()
  let presentMonthSum = monthlySums(expenses)
  console.log('PRESENT MONTHS SUM', presentMonthSum)
- let todaysDate = new Date()
-let weeklyAmount = weeklySums(expenses ,todaysDate)
- 
+let weeklyAmount = weeklySums(expenses, todaysDate)
+ let annualAmount = annualSums(expenses, todaysDate)
+ let todaysAmount = todaysSums(expenses, todaysDate)
 return (
 <div className="w-full py-10 bg-gray-50">
   <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">💸 Expense Dashboard</h1>
@@ -55,14 +56,14 @@ return (
 
       {/* Total Spend */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
-        <h2 className="text-xl font-semibold text-gray-700 mb-3">Total Spend</h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-3">All time Spending</h2>
         <p className="text-6xl font-bold text-green-500">${expenseDisplay}</p>
       </div>
 
       {/* Annual Debt */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
-        <h2 className="text-xl font-semibold text-gray-700 mb-3">Annual Debt</h2>
-        <p className="text-5xl font-bold text-red-400">${presentMonthSum[0].amount}</p>
+        <h2 className="text-xl font-semibold text-gray-700 mb-3">Annual Expense</h2>
+        <p className="text-5xl font-bold text-red-400">${annualAmount[1].annualAmount}</p>
       </div>
 
       {/* Monthly Expense */}
@@ -81,7 +82,7 @@ return (
       {/* Today's Spending */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Today's Spending</h2>
-        <p className="text-4xl font-bold text-purple-500">${presentMonthSum[0].amount}</p>
+        <p className="text-4xl font-bold text-purple-500">${todaysAmount[1].todaysAmount}</p>
       </div>
 
       {/* Total Debt */}

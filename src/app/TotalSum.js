@@ -124,7 +124,7 @@ export function weeklySums(array, targetDate){
   let startingAmount = 0
   let thisWeeksSum = []
 
-  //GET WEEK OF CODER
+  //GET WEEK OF CODE
    const currentWeek = getWeekOf(targetDate)
 //GET WEEK OF CODE
 
@@ -162,3 +162,49 @@ translatedWeek.push({weeklyAmount:startingAmount})
 return translatedWeek
 }
  
+
+
+export function annualSums(array, targetDate){
+let annualSumData = []
+let annualSumAmount = 0
+const todaysYear = targetDate.toLocaleDateString("en-US",{
+    year: "numeric"
+})
+for(let i = 0; i < array.length; i++){
+let currentExpDate = new Date(array[i].date)
+let currentExpYear = currentExpDate.toLocaleDateString("en-US",{
+    year: "numeric"
+})
+
+if(currentExpYear === todaysYear){
+annualSumAmount = annualSumAmount + parseInt(array[i].amount)
+}
+}
+annualSumData.push({currentYear: todaysYear})
+annualSumData.push({annualAmount: annualSumAmount})
+
+console.log(annualSumData)
+return annualSumData
+}
+
+
+export function todaysSums(array, targetDate){
+const todaysDateFormatted = targetDate.toISOString().split("T")[0] // formats date from 2025-06-29T00:00:00.000Z to 2025-06-29
+console.log(targetDate)
+let todaysSumData = []
+let todaysSumAmount = 0
+
+for(let i = 0; i < array.length; i++){
+if(array[i].date === todaysDateFormatted){
+todaysSumAmount = todaysSumAmount + parseInt(array[i].amount)
+}
+}
+todaysSumData.push({todaysDate: targetDate})
+todaysSumData.push({todaysAmount: todaysSumAmount})
+
+console.log(todaysSumData)
+console.log(todaysSumAmount)
+
+return todaysSumData
+}
+
