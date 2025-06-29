@@ -71,18 +71,24 @@ return thisMonthsSum
 //WEEK EXTRACTION AND WEEK SUM//WEEK EXTRACTION AND WEEK SUM//WEEK EXTRACTION AND WEEK SUM//WEEK EXTRACTION AND WEEK SUM
 const todaysDate = new Date();
 
+export function normalizeDate(date){
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
+
 export function getWeekOf(targetDate){
 
-    let currentWeek = []
+let currentWeek = []
 const weeksNumber = targetDate.getDay()
+console.log("weeksNumber:", weeksNumber)
 const endWeekNumber = new Date(targetDate)
+console.log("endWeekNumber:", endWeekNumber)
 const startWeekNumber = new Date(targetDate)
-console.log("weeksNumber", weeksNumber)
+console.log("startWeekNumber:", startWeekNumber)
 
 switch (weeksNumber) {
     case 0:
     endWeekNumber.setDate(targetDate.getDate()+6)
-     currentWeek.push({startingDay: targetDate, endingDay: new Date(endWeekNumber)})
+     currentWeek.push({startingDay: normalizeDate(targetDate), endingDay: normalizeDate(new Date(endWeekNumber))})
      break;
      case 1:
          startWeekNumber.setDate(targetDate.getDate()-1)
@@ -111,25 +117,27 @@ switch (weeksNumber) {
      break;
          case 6:
             startWeekNumber.setDate(targetDate.getDate()-6)
-        currentWeek.push({startingDay:  new Date(startWeekNumber), endingDay: targetDate})
+        currentWeek.push({startingDay: new Date(startWeekNumber), endingDay: targetDate})
      break;
 
 }
-
 console.log("TODAYS WEEK",currentWeek)
 return currentWeek
 }
 
 export function weeklySums(array, targetDate){
+  console.log("targetDate",targetDate)
   let startingAmount = 0
   let thisWeeksSum = []
-
-  //GET WEEK OF CODE
+  //GET WEEK OF CODER
    const currentWeek = getWeekOf(targetDate)
 //GET WEEK OF CODE
 
 let extractedStartingDay = currentWeek[0].startingDay
+console.log("extractedStartingDay", extractedStartingDay)
 let extractedEndingDay = currentWeek[0].endingDay
+console.log("extractedEndingDay", extractedEndingDay)
+
 
 let translatedStartingDay = extractedStartingDay.toLocaleDateString("en-US",{
   month: "long",
@@ -149,19 +157,30 @@ let translatedWeek = []
 translatedWeek.push({startingDay: translatedStartingDay, endingDay: translatedEndingDay})
 console.log("TRANSLATED WEEK:", translatedWeek)
 
+
+  let startWT = normalizeDate(currentWeek[0].startingDay)
+  console.log("startWT:", startWT)
+  let endWT = normalizeDate(currentWeek[0].endingDay)
+    console.log("endWT:", endWT)
+
 for (let i = 0; i < array.length; i++){
   let currentArrayDate = new Date(array[i].date)
-  if(currentWeek[0].endingDay >= currentArrayDate && currentArrayDate >= currentWeek[0].startingDay){
+  console.log("currentArrayDate", currentArrayDate)
+const formatDate = (date) => date.toISOString().split('T')[0];
 
+const formattedExpenseDate = formatDate(currentArrayDate);
+const formattedStart = formatDate(startWT);
+const formattedEnd = formatDate(endWT);
+
+if (formattedExpenseDate >= formattedStart && formattedExpenseDate <= formattedEnd) {
     startingAmount = startingAmount + parseInt(array[i].amount)
     console.log(startingAmount)
   }
 }
-
 translatedWeek.push({weeklyAmount:startingAmount})
+console.log(translatedWeek)
 return translatedWeek
 }
- 
 
 
 export function annualSums(array, targetDate){

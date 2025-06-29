@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import ExpenseForm from './expenseform';
-import {monthlySums, convertDates, getWeekOf, weeklySums, annualSums, todaysSums} from './TotalSum.js'
+import {monthlySums, convertDates, getWeekOf, weeklySums, annualSums, todaysSums, normalizeDate} from './TotalSum.js'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 
