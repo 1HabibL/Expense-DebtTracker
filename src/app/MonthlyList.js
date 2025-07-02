@@ -5,6 +5,7 @@ import InputForm from './inputForm';
 
 function ExpenseForm({ expenses, setExpenses }) {
     //const [expenses, setExpenses] = useState([])
+    const [expensesMonthly, setexpensesMonthly] = useState([])
     const [isHidden,setIsHidden] = useState(true)
     const [filterIsHidden, setFilterIsHidden] = useState(true)
     //filter use states
@@ -25,6 +26,51 @@ function ExpenseForm({ expenses, setExpenses }) {
      //designatedArray
      const [currentMonthExp, setCurrentMonthExp] = useState([])
      
+     const todaysDate = new Date();
+
+function organizedVisibleExpenses(array, targetDate){
+
+    //Convert todays date to 
+    const formattedTodaysMonth = targetDate.toLocaleDateString("en-US",{
+    year: "numeric",
+    month: "long"
+    })
+     console.log("formattedTodaysMonth:", formattedTodaysMonth)
+
+
+     let nextMonthPreperation = new Date(`${formattedTodaysMonth}-01`)
+      let prevMonthPreperation = new Date(`${formattedTodaysMonth}-01`)
+
+
+   nextMonthPreperation.setMonth(nextMonthPreperation.getMonth() + 1)//next month
+   prevMonthPreperation.setMonth(nextMonthPreperation.getMonth() - 1)//Prev month
+     console.log("NEXT MONTH:",nextMonthPreperation.toISOString().slice(0, 7))
+   console.log("prev MONTH:",prevMonthPreperation.toISOString().slice(0, 7))
+
+   let nextMonthReady = nextMonthPreperation.toISOString().slice(0, 7)
+   let prevMonthReady = prevMonthPreperation.toISOString().slice(0, 7)
+   console.log("nextMonthReady:",nextMonthReady)
+    function checkDate(targetExp){
+        const processedEXPdate = new Date(targetExp)
+        const formattedExpenseMonth = processedEXPdate.toLocaleDateString("en-US",{
+            year: "numeric",
+            month: "long"
+        })
+        //console.log("formattedExpenseMonth:", formattedExpenseMonth)
+        return formattedExpenseMonth
+    }
+
+    for(let i = 0; i < array.length; i++){
+     let currentExpMonth = checkDate(array[i].date)
+    console.log("currentExpMonth:", currentExpMonth)
+    if(currentExpMonth === formattedTodaysMonth){
+         setCurrentMonthExp(prev => [...prev,array[i]])
+    }
+
+    }
+    console.log(monthlyVisibleEXP)
+    
+}
 
 
 //function for hiding and veiwing filter form
@@ -50,8 +96,8 @@ if(savedFilters){
 }
 }, []);
 
-        //function to delete selected expense 
-        const handleDelete = (index) => {
+ //function to delete selected expense 
+  const handleDelete = (index) => {
             const newExpenses = expenses.filter((_, i) => i !== index);
             setExpenses(newExpenses)
         } 
@@ -104,6 +150,7 @@ const clearData = () =>{
     const updatedExpenses = [...expenses];
 
 // replacing the specific item at the given index with updated values
+
 updatedExpenses[index] = {
 expenseName: editedName,
 amount: editedAmount,

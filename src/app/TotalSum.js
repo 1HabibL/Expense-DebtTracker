@@ -13,7 +13,8 @@ console.log("formattedToday:",formattedToday);
 const numericalFormat = new Date().toISOString().split("T")[0]
 
 export function convertDates(targetDate){
-    let processedDate = new Date(targetDate)
+    let rawDate = new Date(targetDate)
+    let processedDate = new Date(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate())
     let expenseMonth = processedDate.toLocaleDateString("en-us",{
         month: "long"
     }) 
@@ -35,12 +36,6 @@ const todaysMonthFormatted = todaysDate.toLocaleDateString("en-us",{
 console.log("todaysDate", todaysDate)
 console.log("todaysMonthFormatted:", todaysMonthFormatted)
 console.log("todaysMYFormatted", todaysMYFormatted)
-
-const annualMonths = [{month: "January"},{month: "February"}, 
-    {month: "March"}, {month: "April"}, {month: "May"},
-     {month: "June"},{month: "July"}, {month: "August"}, 
-     {month: "September"}, {month: "October"},
-      {month: "November"}, {month: "December"}]
 
 const thisMonthsSum = []
 const allAplicableMonthSums = []

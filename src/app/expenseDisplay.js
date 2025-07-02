@@ -40,6 +40,9 @@ const calculateExpenses = (dataArray) => {
     setExpenseDisplay(total)
 }
 let todaysDate = new Date()
+let todayFormatted = todaysDate.toLocaleDateString("en-US",{month: "long", day: "numeric", year: "numeric"})
+let todayMonthFormatted = todaysDate.toLocaleDateString("en-US",{month: "long", year: "numeric"})
+let todayYearFormatted = todaysDate.toLocaleDateString("en-US",{year: "numeric"})
  let presentMonthSum = monthlySums(expenses)
  console.log('PRESENT MONTHS SUM', presentMonthSum)
 let weeklyAmount = weeklySums(expenses, todaysDate)
@@ -64,31 +67,37 @@ return (
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Annual Expense</h2>
         <p className="text-5xl font-bold text-red-400">${annualAmount[1].annualAmount}</p>
+          <p className="text-xl font-bold">{todayYearFormatted}</p>
       </div>
 
       {/* Monthly Expense */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Monthly Expense</h2>
         <p className="text-4xl font-bold text-blue-500">${presentMonthSum[0].amount}</p>
+        <p className="text-xl font-bold">{todayMonthFormatted}</p>
+
       </div>
 
       {/* Weekly Expense */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Weekly Expense</h2>
         <p className="text-4xl font-bold text-blue-400">${weeklyAmount[1].weeklyAmount}</p>
-        <p className="text-xl font-bold ">{weeklyAmount[0].startingDay} - {weeklyAmount[0].endingDay}</p>
+        <p className="text-xl font-bold">{weeklyAmount[0].startingDay} - {weeklyAmount[0].endingDay}</p>
       </div>
 
       {/* Today's Spending */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Today's Spending</h2>
         <p className="text-4xl font-bold text-purple-500">${todaysAmount[1].todaysAmount}</p>
+        <p className="text-xl font-bold">{todayFormatted}</p>
+
       </div>
 
       {/* Total Debt */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Total Debt</h2>
-        <p className="text-4xl font-bold text-red-500">${presentMonthSum[0].amount}</p>
+        <p className="text-4xl font-bold text-red-500">W.I.P</p>
+        <p className="text-xl font-bold">Credit Cards, Line of Credit, etc..</p>
       </div>
     </div>
 

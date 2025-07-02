@@ -125,7 +125,6 @@ const clearData = () =>{
       />
     </div>
 
-
   {/* Section 2 */}
   <div className="grid md:grid-cols-2 gap-6 mb-4">
     <div className="flex flex-col">
@@ -224,14 +223,10 @@ const clearData = () =>{
 </form>
    {/* EXPENSE LIST STARTES HERE */}
 
-  {/* EXPENSE LIST STARTES HERE */}
-  
+  {/* EXPENSE LIST STARTES HERE */} 
       </div>
-
-
 )
 }
-
 
 export default InputForm;
 

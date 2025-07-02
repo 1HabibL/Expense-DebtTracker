@@ -17,19 +17,6 @@ const [displaySum, setdisplaySum] = useState(true)
 const [displayDashboard, setdisplayDashboard ] = useState(false)
 const [displayCards, setdisplayCards ] = useState(false)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 const appComponents = [
   {
     id: "home",
