@@ -12,37 +12,45 @@ console.log("formattedToday:",formattedToday);
 
 const numericalFormat = new Date().toISOString().split("T")[0]
 
-export function convertDates(targetDate){
+function convertDates(targetDate){
     let rawDate = new Date(targetDate)
+    console.log("rawDate", rawDate )
     let processedDate = new Date(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate())
-    let expenseMonth = processedDate.toLocaleDateString("en-us",{
-        month: "long"
+    console.log("processedDate", processedDate)
+    let expenseMonth = rawDate.toLocaleDateString("en-us",{
+        year: "numeric",
+        month: "long",
+        timeZone: "UTC"   
     }) 
+console.log("expenseMonth:", expenseMonth)
 
-    return expenseMonth
+return expenseMonth
 }
 
-
-export function monthlySums(array){
+function monthlySums(array){
 const todaysDate = new Date()
+
 const todaysMYFormatted = todaysDate.toLocaleDateString("en-us",{
     year: "numeric",
-    day: "numeric"
+    month: "long",
+     timeZone: "UTC" 
 })
+//console.log(todaysMYFormatted)
 
 const todaysMonthFormatted = todaysDate.toLocaleDateString("en-us",{ 
-    month: "long"
+    month: "long",
+    year: "numeric"
 })
-console.log("todaysDate", todaysDate)
-console.log("todaysMonthFormatted:", todaysMonthFormatted)
-console.log("todaysMYFormatted", todaysMYFormatted)
+//console.log("todaysDate", todaysDate)
+//console.log("todaysMonthFormatted:", todaysMonthFormatted)
+//console.log("todaysMYFormatted", todaysMYFormatted)
 
 const thisMonthsSum = []
 const allAplicableMonthSums = []
 
 thisMonthsSum.push({month:todaysMonthFormatted, amount: 0})
 
-console.log("thisMonthsSum before for loop:",thisMonthsSum)
+//console.log("thisMonthsSum before for loop:",thisMonthsSum)
 
 for(let i = 0; i < array.length; i++){
 
@@ -52,14 +60,10 @@ if(thisMonthsSum[0].month === expenseMonth){
     thisMonthsSum[0].amount = thisMonthsSum[0].amount + parseInt(array[i].amount)
 } 
 
-
 }
 console.log("monthly sums final:",thisMonthsSum)
-return thisMonthsSum
+return  thisMonthsSum
 }
-
-
-
 
 //WEEK EXTRACTION AND WEEK SUM //WEEK EXTRACTION AND WEEK SUM //WEEK EXTRACTION AND WEEK SUM //WEEK EXTRACTION AND WEEK SUM
 //WEEK EXTRACTION AND WEEK SUM//WEEK EXTRACTION AND WEEK SUM//WEEK EXTRACTION AND WEEK SUM//WEEK EXTRACTION AND WEEK SUM
