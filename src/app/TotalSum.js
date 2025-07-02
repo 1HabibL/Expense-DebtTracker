@@ -12,7 +12,7 @@ console.log("formattedToday:",formattedToday);
 
 const numericalFormat = new Date().toISOString().split("T")[0]
 
-function convertDates(targetDate){
+export function convertDates(targetDate){
     let rawDate = new Date(targetDate)
     console.log("rawDate", rawDate )
     let processedDate = new Date(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate())
@@ -27,7 +27,7 @@ console.log("expenseMonth:", expenseMonth)
 return expenseMonth
 }
 
-function monthlySums(array){
+export function monthlySums(array){
 const todaysDate = new Date()
 
 const todaysMYFormatted = todaysDate.toLocaleDateString("en-us",{
