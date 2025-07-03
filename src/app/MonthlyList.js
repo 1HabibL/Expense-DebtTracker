@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import InputForm from './inputForm';
 
-function ExpenseForm({ expenses, setExpenses }) {
+function MonthlyexpenseForm({ expenses, setExpenses }) {
     //const [expenses, setExpenses] = useState([])
     const [expensesMonthly, setexpensesMonthly] = useState([])
     const [isHidden,setIsHidden] = useState(true)
@@ -28,29 +28,12 @@ function ExpenseForm({ expenses, setExpenses }) {
      
      const todaysDate = new Date();
 
-function organizedVisibleExpenses(array, targetDate){
-
-    //Convert todays date to 
-    const formattedTodaysMonth = targetDate.toLocaleDateString("en-US",{
+     const formattedTodaysMonth = todaysDate.toLocaleDateString("en-US",{
     year: "numeric",
     month: "long"
     })
-     console.log("formattedTodaysMonth:", formattedTodaysMonth)
 
-
-     let nextMonthPreperation = new Date(`${formattedTodaysMonth}-01`)
-      let prevMonthPreperation = new Date(`${formattedTodaysMonth}-01`)
-
-
-   nextMonthPreperation.setMonth(nextMonthPreperation.getMonth() + 1)//next month
-   prevMonthPreperation.setMonth(nextMonthPreperation.getMonth() - 1)//Prev month
-     console.log("NEXT MONTH:",nextMonthPreperation.toISOString().slice(0, 7))
-   console.log("prev MONTH:",prevMonthPreperation.toISOString().slice(0, 7))
-
-   let nextMonthReady = nextMonthPreperation.toISOString().slice(0, 7)
-   let prevMonthReady = prevMonthPreperation.toISOString().slice(0, 7)
-   console.log("nextMonthReady:",nextMonthReady)
-    function checkDate(targetExp){
+        function checkDate(targetExp){
         const processedEXPdate = new Date(targetExp)
         const formattedExpenseMonth = processedEXPdate.toLocaleDateString("en-US",{
             year: "numeric",
@@ -59,19 +42,6 @@ function organizedVisibleExpenses(array, targetDate){
         //console.log("formattedExpenseMonth:", formattedExpenseMonth)
         return formattedExpenseMonth
     }
-
-    for(let i = 0; i < array.length; i++){
-     let currentExpMonth = checkDate(array[i].date)
-    console.log("currentExpMonth:", currentExpMonth)
-    if(currentExpMonth === formattedTodaysMonth){
-         setCurrentMonthExp(prev => [...prev,array[i]])
-    }
-
-    }
-    console.log(monthlyVisibleEXP)
-    
-}
-
 
 //function for hiding and veiwing filter form
 const handleClickFilter = () => {
@@ -107,7 +77,6 @@ const clearData = () =>{
     setExpenses([]);
 }
         //localStorage code
-
         //Function to filter
         const appliedFilter = (event) => {
 
@@ -142,8 +111,6 @@ const clearData = () =>{
             localStorage.removeItem("expenseFilter")
         };
 
-
-  
  //Function to edit Expenses in Expense LIst
  const handleEdit = (index) => {
     // Copy of current expenses array
@@ -174,14 +141,19 @@ const handleEditButtonClick = (index) => {
     setIsEditing(true);
 }
  
-
 const cancelEdit = (index) => {
     // Copy of current expenses array
     setIsEditing(false);
   setEditIndex(null);
- 
 }
- 
+
+useEffect(() => {
+  const monthlyExpenses = expenses.filter(exp => 
+    checkDate(exp.date) === formattedTodaysMonth
+  );
+  setCurrentMonthExp(monthlyExpenses)
+},[expenses]);
+
     return (
         <div className=' w-3/4'>
              <link
@@ -323,9 +295,9 @@ const cancelEdit = (index) => {
   {/* Expense List */}
   <div className="max-h-[400px] overflow-y-auto space-y-4">
     <ul className="space-y-4">
-    {(Array.isArray(expenses) ? 
+    {(Array.isArray(currentMonthExp) ? 
     (filteredExpenses.length > 0 ? filteredExpenses : 
-      (filtersStatus && filteredExpenses.length == 0 ? [] : expenses) 
+      (filtersStatus && filteredExpenses.length == 0 ? [] : currentMonthExp) 
     ):( 
       
       [])).map((expense, index) => (
@@ -450,6 +422,6 @@ const cancelEdit = (index) => {
 }
 
 
-export default ExpenseForm;
+export default MonthlyexpenseForm;
 
 

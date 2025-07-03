@@ -22,10 +22,6 @@ function ExpenseForm({ expenses, setExpenses }) {
      const [editedCategory, setEditedCategory] = useState ("")
      const [editedDate, setEditedDate] = useState ("")
      const [editIndex, setEditIndex] = useState(null);
-     //designatedArray
-     const [currentMonthExp, setCurrentMonthExp] = useState([])
-     
-
 
 //function for hiding and veiwing filter form
 const handleClickFilter = () => {

@@ -3,6 +3,7 @@ import {Component, useEffect, useState} from "react";
 
 import DashBoard from './dashBoard'; 
 import ExpenseForm from "./expenseform";
+import MonthlyexpenseForm from "./monthlyList";
 import InputForm from "./inputForm";
 import NavBar from "./navbar";
 import SideBar from "./sideBar";
@@ -64,6 +65,8 @@ return(
               </div>
                 <div id="expenseFormContainer" className="ml-24 mr-21 flex">
                   <ExpenseForm  expenses={expenses} setExpenses={setExpenses}/>
+
+                   <MonthlyexpenseForm  expenses={expenses} setExpenses={setExpenses}/>
 
                   <div className="ml-auto mt-13">
                   <InputForm  expenses={expenses} setExpenses={setExpenses}/>
