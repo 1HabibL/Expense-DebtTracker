@@ -25,14 +25,33 @@ function MonthlyexpenseForm({ expenses, setExpenses }) {
      const [editIndex, setEditIndex] = useState(null);
      //designatedArray
      const [currentMonthExp, setCurrentMonthExp] = useState([])
-     
+     const [monthCounter, setMonthCounter] = useState(0)
      const todaysDate = new Date();
 
-     const formattedTodaysMonth = todaysDate.toLocaleDateString("en-US",{
+     const formattedTD = todaysDate.toLocaleDateString("en-US",{
+    month: "long",
+    year: "numeric"
+})
+console.log("todaysDate:",todaysDate)
+
+const incrementMonth = () => setMonthCounter(prev => prev + 1)
+const decrementMonth = () => setMonthCounter(prev => prev - 1)
+
+    const formattedTodaysMonth = todaysDate.toLocaleDateString("en-US",{
     year: "numeric",
     month: "long"
     })
+    console.log("formattedTodaysMonth", formattedTodaysMonth)
 
+    let nextMonthPreperation = new Date(`${formattedTodaysMonth}-01`)
+  console.log("nextMonthPreperation", nextMonthPreperation)
+    nextMonthPreperation.setMonth(nextMonthPreperation.getMonth() + (monthCounter))
+
+const formattedDesignatedMonths = nextMonthPreperation.toLocaleDateString("en-US",{
+    year: "numeric",
+    month: "long"
+    })
+    console.log("formattedDesignatedMonths:", formattedDesignatedMonths)
         function checkDate(targetExp){
         const processedEXPdate = new Date(targetExp)
         const formattedExpenseMonth = processedEXPdate.toLocaleDateString("en-US",{
@@ -79,19 +98,15 @@ const clearData = () =>{
         //localStorage code
         //Function to filter
         const appliedFilter = (event) => {
-
             event.preventDefault(); // Prevent page reload
             setfiltersStatus(true)
             const anyFilterApplied = filterName || filterCategory || filterDate;
             setFiltersApplied(anyFilterApplied);
-       
-
             localStorage.setItem("expenseFilter", JSON.stringify({
                 filterName,
                 filterCategory,
                 filterDate
             }))
-
             const fullyfilteredExpenses = expenses.filter((x) => {
             return(!filterName || x.expenseName.toLowerCase() === filterName.toLowerCase()) &&
             (!filterCategory || x.category.toLowerCase() === filterCategory.toLowerCase()) &&
@@ -100,7 +115,6 @@ const clearData = () =>{
         )
         setFilteredExpenses(fullyfilteredExpenses)
         }
-
         const resetFilters = () => {
             setFilterName("");
             setFilterCategory("");
@@ -110,14 +124,11 @@ const clearData = () =>{
             setfiltersStatus(false);
             localStorage.removeItem("expenseFilter")
         };
-
  //Function to edit Expenses in Expense LIst
  const handleEdit = (index) => {
     // Copy of current expenses array
     const updatedExpenses = [...expenses];
-
 // replacing the specific item at the given index with updated values
-
 updatedExpenses[index] = {
 expenseName: editedName,
 amount: editedAmount,
@@ -125,11 +136,9 @@ category: editedCategory,
 date: editedDate,
 }
   setExpenses(updatedExpenses)
- 
  setIsEditing(false)
  setEditIndex(null)  
 }
-
 //function so user sees original inputs in the textboxes during editing
 const handleEditButtonClick = (index) => {
     const selectedExpense = expenses[index];
@@ -140,22 +149,21 @@ const handleEditButtonClick = (index) => {
     setEditIndex(index);
     setIsEditing(true);
 }
- 
 const cancelEdit = (index) => {
     // Copy of current expenses array
     setIsEditing(false);
   setEditIndex(null);
 }
-
+//Filters expenses to only display expenses of current
 useEffect(() => {
   const monthlyExpenses = expenses.filter(exp => 
-    checkDate(exp.date) === formattedTodaysMonth
+    checkDate(exp.date) === formattedDesignatedMonths
   );
   setCurrentMonthExp(monthlyExpenses)
-},[expenses]);
+},[expenses,formattedDesignatedMonths,monthCounter]);
 
     return (
-        <div className=' w-3/4'>
+        <div className=' w-full'>
              <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
@@ -171,6 +179,19 @@ useEffect(() => {
   {/* Header Section */}
   <div className="flex items-center justify-between mb-6">
     <h1 className="text-3xl font-bold text-gray-800">Expenses</h1>
+
+<button onClick={() => setMonthCounter(prev => prev - 1)}>prev</button>
+<span className="material-symbols-outlined">
+arrow_back_ios
+</span>
+
+<h1 className="text-3xl font-bold text-gray-800">{formattedDesignatedMonths}</h1>
+
+<span className="material-symbols-outlined">
+arrow_forward_ios
+</span>
+<button onClick={() => setMonthCounter(prev => prev + 1)}>forward</button>
+
     <button
       onClick={handleClickFilter}
       id="resetFilterBtn"

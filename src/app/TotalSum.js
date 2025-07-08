@@ -6,23 +6,23 @@ const formattedToday = today.toLocaleDateString("en-US",{
     month: "long",
     day: "numeric"
 })
-console.log("today:",today);
-console.log("formattedToday:",formattedToday);
+//console.log("today:",today);
+//console.log("formattedToday:",formattedToday);
 
 
 const numericalFormat = new Date().toISOString().split("T")[0]
 
 export function convertDates(targetDate){
     let rawDate = new Date(targetDate)
-    console.log("rawDate", rawDate )
+    //console.log("rawDate", rawDate )
     let processedDate = new Date(rawDate.getFullYear(), rawDate.getMonth(), rawDate.getDate())
-    console.log("processedDate", processedDate)
+   // console.log("processedDate", processedDate)
     let expenseMonth = rawDate.toLocaleDateString("en-us",{
         year: "numeric",
         month: "long",
         timeZone: "UTC"   
     }) 
-console.log("expenseMonth:", expenseMonth)
+//console.log("expenseMonth:", expenseMonth)
 
 return expenseMonth
 }
@@ -61,7 +61,7 @@ if(thisMonthsSum[0].month === expenseMonth){
 } 
 
 }
-console.log("monthly sums final:",thisMonthsSum)
+//console.log("monthly sums final:",thisMonthsSum)
 return  thisMonthsSum
 }
 
@@ -78,11 +78,11 @@ export function getWeekOf(targetDate){
 
 let currentWeek = []
 const weeksNumber = targetDate.getDay()
-console.log("weeksNumber:", weeksNumber)
+//console.log("weeksNumber:", weeksNumber)
 const endWeekNumber = new Date(targetDate)
-console.log("endWeekNumber:", endWeekNumber)
+//console.log("endWeekNumber:", endWeekNumber)
 const startWeekNumber = new Date(targetDate)
-console.log("startWeekNumber:", startWeekNumber)
+//console.log("startWeekNumber:", startWeekNumber)
 
 switch (weeksNumber) {
     case 0:
@@ -120,12 +120,12 @@ switch (weeksNumber) {
      break;
 
 }
-console.log("TODAYS WEEK",currentWeek)
+//console.log("TODAYS WEEK",currentWeek)
 return currentWeek
 }
 
 export function weeklySums(array, targetDate){
-  console.log("targetDate",targetDate)
+  //console.log("targetDate",targetDate)
   let startingAmount = 0
   let thisWeeksSum = []
   //GET WEEK OF CODER
@@ -133,9 +133,9 @@ export function weeklySums(array, targetDate){
 //GET WEEK OF CODE
 
 let extractedStartingDay = currentWeek[0].startingDay
-console.log("extractedStartingDay", extractedStartingDay)
+//console.log("extractedStartingDay", extractedStartingDay)
 let extractedEndingDay = currentWeek[0].endingDay
-console.log("extractedEndingDay", extractedEndingDay)
+//console.log("extractedEndingDay", extractedEndingDay)
 
 
 let translatedStartingDay = extractedStartingDay.toLocaleDateString("en-US",{
@@ -154,17 +154,17 @@ let translatedEndingDay = extractedEndingDay.toLocaleDateString("en-US",{
 let translatedWeek = []
 
 translatedWeek.push({startingDay: translatedStartingDay, endingDay: translatedEndingDay})
-console.log("TRANSLATED WEEK:", translatedWeek)
+//console.log("TRANSLATED WEEK:", translatedWeek)
 
 
   let startWT = normalizeDate(currentWeek[0].startingDay)
-  console.log("startWT:", startWT)
+  //console.log("startWT:", startWT)
   let endWT = normalizeDate(currentWeek[0].endingDay)
-    console.log("endWT:", endWT)
+    //console.log("endWT:", endWT)
 
 for (let i = 0; i < array.length; i++){
   let currentArrayDate = new Date(array[i].date)
-  console.log("currentArrayDate", currentArrayDate)
+  //console.log("currentArrayDate", currentArrayDate)
 const formatDate = (date) => date.toISOString().split('T')[0];
 
 const formattedExpenseDate = formatDate(currentArrayDate);
@@ -173,11 +173,11 @@ const formattedEnd = formatDate(endWT);
 
 if (formattedExpenseDate >= formattedStart && formattedExpenseDate <= formattedEnd) {
     startingAmount = startingAmount + parseInt(array[i].amount)
-    console.log(startingAmount)
+    //console.log(startingAmount)
   }
 }
 translatedWeek.push({weeklyAmount:startingAmount})
-console.log(translatedWeek)
+//console.log(translatedWeek)
 return translatedWeek
 }
 
@@ -201,14 +201,14 @@ annualSumAmount = annualSumAmount + parseInt(array[i].amount)
 annualSumData.push({currentYear: todaysYear})
 annualSumData.push({annualAmount: annualSumAmount})
 
-console.log(annualSumData)
+//console.log(annualSumData)
 return annualSumData
 }
 
 
 export function todaysSums(array, targetDate){
 const todaysDateFormatted = targetDate.toISOString().split("T")[0] // formats date from 2025-06-29T00:00:00.000Z to 2025-06-29
-console.log(targetDate)
+//console.log(targetDate)
 let todaysSumData = []
 let todaysSumAmount = 0
 
@@ -220,8 +220,8 @@ todaysSumAmount = todaysSumAmount + parseInt(array[i].amount)
 todaysSumData.push({todaysDate: targetDate})
 todaysSumData.push({todaysAmount: todaysSumAmount})
 
-console.log(todaysSumData)
-console.log(todaysSumAmount)
+//console.log(todaysSumData)
+//console.log(todaysSumAmount)
 
 return todaysSumData
 }

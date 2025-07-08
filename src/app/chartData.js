@@ -49,23 +49,23 @@ export function dateProcessing(array) {
     function datesExtractions (array) {
     let extractedDates = array.map((targetExp) => targetExp.date).filter((cat, index, self) => self.indexOf(cat) === index) 
 
-    console.log("extractedDates:",extractedDates)
+   // console.log("extractedDates:",extractedDates)
     
 extractedDates.sort((a, b) => new Date(a) - new Date(b))
- console.log("organized extractedDates", extractedDates)
+ //console.log("organized extractedDates", extractedDates)
 
     //convert extractedDAtes
 
     let stringDateConversion = extractedDates.map((targetDate) => new Date(targetDate))
 
-    console.log("stringDateConversion:", stringDateConversion)
+    //console.log("stringDateConversion:", stringDateConversion)
 
     let formattedDates = stringDateConversion.map((targetDate) => targetDate.toLocaleDateString("en-Us", {
         month: "long",
         year: "numeric"
     }))
 
-     console.log("this is formatted dates:",formattedDates)
+     //console.log("this is formatted dates:",formattedDates)
 
      let individualizedDates =  []
 
@@ -75,14 +75,14 @@ extractedDates.sort((a, b) => new Date(a) - new Date(b))
         }
      }
 
- console.log("individualized dates:", individualizedDates)
+ //console.log("individualized dates:", individualizedDates)
 
 
 let refinedMonthAmounts = individualizedDates.map((targetMonthAmount) => summedMonths.push({date: targetMonthAmount, amount: 0}))
 
 
 let dateRefinements = extractedDates.map((targetDate) => refinedDates.push({date: targetDate, amount: 0}))
-console.log("")
+//console.log("")
 //TOTAL SUM FOR specefic months
 
 
@@ -102,7 +102,7 @@ for(let i = 0; i < summedMonths.length; i++){
 summedMonths[i].amount += parseInt(array[n].amount);
         }
     }
-    console.log("Sum for that month (summedMonths):", summedMonths)
+    //console.log("Sum for that month (summedMonths):", summedMonths)
 }
 
 
@@ -121,7 +121,7 @@ for(let n = 0; n < array.length; n++){
     }
 
     datesExtractions(array)
-     console.log("this is refined dates:", refinedDates)
+    // console.log("this is refined dates:", refinedDates)
 
 return summedMonths
  }

@@ -3,16 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
-
+//onClick={() => setdesignatedComponent("history")} 
 function SideBar({designatedComponent, setdesignatedComponent}) {
-  //const [designatedComponent, setdesignatedComponent] = useState("home")
-
-  
-/*const handleClick = (value) => {
-  setdesignatedComponent(value);
-   console.log("Selected:", value);
-}*/
-
 
 return(
 <div>
@@ -24,8 +16,8 @@ return(
       <li onClick={() => setdesignatedComponent("dashboards")} className="hover:text-cyan-300 transition duration-200 cursor-pointer">
         Dashboard
       </li>
-      <li value="history" onClick={() => setdesignatedComponent("history")}  className="hover:text-cyan-300 transition duration-200 cursor-pointer">
-        History
+      <li value="history" onClick={() => setdesignatedComponent("history")} className="hover:text-cyan-300 transition duration-200 cursor-pointer">
+       History
       </li>
       <li value="cards" onClick={() => setdesignatedComponent("cards")} className="hover:text-cyan-300 transition duration-200 cursor-pointer">
         Cards

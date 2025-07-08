@@ -13,24 +13,24 @@ import DisplayExpense from "./expenseDisplay";
 export default function Home() {
 const [expenses, setExpenses] = useState([]);
 const [designatedComponent, setdesignatedComponent] = useState("home")
+const [designatedBaseComponent, setdesignatedBaseComponent] = useState("home")
 //const [activeComponent, setActiveComponent] = useState(expenseDisplay);
-const [displaySum, setdisplaySum] = useState(true)
-const [displayDashboard, setdisplayDashboard ] = useState(false)
-const [displayCards, setdisplayCards ] = useState(false)
+
 
 const appComponents = [
-  {
-    id: "home",
-    component: <DisplayExpense expenses={expenses} />
-  },
-
-  {
-    id: 'dashboards',
-    component: <DashBoard expenses={expenses} />
-  }
+  {id: "home",component: <DisplayExpense expenses={expenses} /> },
+  {id: 'dashboards',component: <DashBoard expenses={expenses} />}
 ]
 
+const baseComponents = [
+  {id: 'history',component: <ExpenseForm expenses={expenses} setExpenses={setExpenses}/>},
+  {id: 'home',component: <MonthlyexpenseForm expenses={expenses} setExpenses={setExpenses}/>},
+  {id: 'dashboards',component: <MonthlyexpenseForm expenses={expenses} setExpenses={setExpenses}/>},
+]
+
+
 const decidedComponent = appComponents.filter((compDisplay) => compDisplay.id == designatedComponent)
+const decidedBaseComponent = baseComponents.filter((bodyDisplay) => bodyDisplay.id == designatedComponent)
 
 useEffect(() => {
   const targetComponent = localStorage.getItem("targetComponent");
@@ -39,21 +39,29 @@ useEffect(() => {
   }
 }, [])
 
+/*
+useEffect(() =>{
+  const targetBaseComponent = localStorage.getItem("targetBaseComponent");
+  if (targetBaseComponent){
+    setdesignatedBaseComponent(targetBaseComponent)
+  }
+}, [])
+*/
 //Save components whenever it changes
 useEffect(() => {
   localStorage.setItem('targetComponent', designatedComponent)
 }, [designatedComponent])
-
-//<div className="absolute top-0 left-48 w-[30%] h-[100%]  bg-gradient-to-r from-purple-700 via-red-500 to-white z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}></div>
-  // <DisplayExpense id="expenseDisplay"  expenses={expenses}/>
-  //<DashBoard id="expenseDashboard" expenses={expenses}/>
+/*
+useEffect(() => {
+  localStorage.setItem('targetBaseComponent', designatedBaseComponent)
+}, [designatedBaseComponent])
+*/
 return(
     <div className="bg-[#f8f9fa]">
-    
       <NavBar />
         <div className="flex relative">
         <SideBar designatedComponent={designatedComponent} setdesignatedComponent={setdesignatedComponent} />
-        
+          {/*COMPONENT A1 */}           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}
           <div className="flex flex-col w-screen z-10 relative" id="fullExpenseForm">
               <div className="flex flex-col w-4/4">
               <div id='mainDisplay' className="w-full">
@@ -63,20 +71,39 @@ return(
               )
               }
               </div>
-                <div id="expenseFormContainer" className="ml-24 mr-21 flex">
-                  <ExpenseForm  expenses={expenses} setExpenses={setExpenses}/>
-
-                   <MonthlyexpenseForm  expenses={expenses} setExpenses={setExpenses}/>
-
+                <div id="expenseFormContainer" className="ml-24 mr-21 flex ">
+              
+              {
+               decidedBaseComponent.map(({id, component}) =>
+              <div id="baseComponent" className="w-3/4" key={id}>{component}</div>
+              )
+              }
                   <div className="ml-auto mt-13">
                   <InputForm  expenses={expenses} setExpenses={setExpenses}/>
                   </div>
                 </div>
                 </div>
             </div>
-          
-          
+          {/*COMPONENT A1 */}           {/*COMPONENT A1 */}          {/*COMPONENT A1 */}          
         </div>
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//<div className="absolute top-0 left-48 w-[30%] h-[100%]  bg-gradient-to-r from-purple-700 via-red-500 to-white z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}></div>
+  // <DisplayExpense id="expenseDisplay"  expenses={expenses}/>
+  //<DashBoard id="expenseDashboard" expenses={expenses}/>

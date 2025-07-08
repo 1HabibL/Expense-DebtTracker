@@ -12,7 +12,7 @@ const [date, setDate] = useState(new Date())
 
 
 useEffect(() => {
-    console.log("infoData updated:", JSON.stringify(expenses));
+   // console.log("infoData updated:", JSON.stringify(expenses));
     if (Array.isArray(expenses) && expenses.length > 0){
         calculateExpenses(expenses)} else {
             setExpenseDisplay(0)
@@ -21,14 +21,14 @@ useEffect(() => {
 
 
 const calculateExpenses = (dataArray) => {
-    console.log("Calculating total sum for:", JSON.stringify(dataArray))
+   // console.log("Calculating total sum for:", JSON.stringify(dataArray))
     if(!Array.isArray(dataArray || dataArray.length === 0))
     {
         setExpenseDisplay(0)
         return
     }
     const total = dataArray.reduce((total, item) => {
-        console.log("pricessing item", item);
+       // console.log("pricessing item", item);
         const numberValue = Number(item.amount)
 
         if(!isNaN(numberValue)){
@@ -36,7 +36,7 @@ const calculateExpenses = (dataArray) => {
         }
     return total;}, 0)
 
-    console.log("Calculated total:", total)
+    //console.log("Calculated total:", total)
     setExpenseDisplay(total)
 }
 let todaysDate = new Date()
@@ -44,10 +44,10 @@ let todayFormatted = todaysDate.toLocaleDateString("en-US",{month: "long", day: 
 let todayMonthFormatted = todaysDate.toLocaleDateString("en-US",{month: "long", year: "numeric"})
 let todayYearFormatted = todaysDate.toLocaleDateString("en-US",{year: "numeric"})
  let presentMonthSum = monthlySums(expenses)
- console.log('PRESENT MONTHS SUM', presentMonthSum)
+ //console.log('PRESENT MONTHS SUM', presentMonthSum)
 let weeklyAmount = weeklySums(expenses, todaysDate)
  let annualAmount = annualSums(expenses, todaysDate)
- let todaysAmount = todaysSums(expenses, todaysDate)
+ let todaysAmount1 = todaysSums(expenses, todaysDate)
 return (
 <div className="w-full py-10 bg-gray-50">
   <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">💸 Expense Dashboard</h1>
@@ -88,7 +88,7 @@ return (
       {/* Today's Spending */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
         <h2 className="text-xl font-semibold text-gray-700 mb-3">Today's Spending</h2>
-        <p className="text-4xl font-bold text-purple-500">${todaysAmount[1].todaysAmount}</p>
+        <p className="text-4xl font-bold text-purple-500">${todaysAmount1[1].todaysAmount}</p>
         <p className="text-xl font-bold">{todayFormatted}</p>
 
       </div>

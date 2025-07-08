@@ -132,7 +132,7 @@ const cancelEdit = (index) => {
 }
  
     return (
-        <div className=' w-3/4'>
+        <div className=' w-full'>
              <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
