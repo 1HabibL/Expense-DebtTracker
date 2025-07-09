@@ -130,9 +130,8 @@ const cancelEdit = (index) => {
   setEditIndex(null);
  
 }
- 
     return (
-        <div className=' w-full'>
+        <div className='w-full'>
              <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
@@ -146,7 +145,7 @@ const cancelEdit = (index) => {
   className="my-8 w-full bg-white shadow-xl rounded-3xl p-8"
 >
   {/* Header Section */}
-  <div className="flex items-center justify-between mb-6">
+  <div className="flex items-center justify-between mb-6 ">
     <h1 className="text-3xl font-bold text-gray-800">Expenses</h1>
     <button
       onClick={handleClickFilter}
@@ -270,7 +269,7 @@ const cancelEdit = (index) => {
 
  {/*Applied FILTERS UI */}
   {/* Expense List */}
-  <div className="max-h-[400px] overflow-y-auto space-y-4">
+  <div className="overflow-y-auto space-y-4 max-h-[1000px]">
     <ul className="space-y-4">
     {(Array.isArray(expenses) ? 
     (filteredExpenses.length > 0 ? filteredExpenses : 

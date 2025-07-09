@@ -163,7 +163,7 @@ useEffect(() => {
 },[expenses,formattedDesignatedMonths,monthCounter]);
 
     return (
-        <div className=' w-full'>
+        <div className='w-full'>
              <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>

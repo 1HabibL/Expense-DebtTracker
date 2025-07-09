@@ -63,7 +63,7 @@ return(
         <SideBar designatedComponent={designatedComponent} setdesignatedComponent={setdesignatedComponent} />
           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}
           <div className="flex flex-col w-screen z-10 relative" id="fullExpenseForm">
-              <div className="flex flex-col w-4/4">
+              <div className="flex flex-col w-4/4 ">
               <div id='mainDisplay' className="w-full">
                {
                decidedComponent.map(({id, component}) =>
@@ -71,17 +71,20 @@ return(
               )
               }
               </div>
-                <div id="expenseFormContainer" className="ml-24 mr-21 flex ">
+
+                <div id="expenseFormContainer" className="ml-24 mr-21 flex h-full">
               
               {
                decidedBaseComponent.map(({id, component}) =>
-              <div id="baseComponent" className="w-3/4" key={id}>{component}</div>
+              <div id="baseComponent"className="w-3/4" key={id}>{component}</div>
               )
               }
                   <div className="ml-auto mt-13">
                   <InputForm  expenses={expenses} setExpenses={setExpenses}/>
                   </div>
                 </div>
+
+
                 </div>
             </div>
           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}          {/*COMPONENT A1 */}          
@@ -107,3 +110,5 @@ return(
 //<div className="absolute top-0 left-48 w-[30%] h-[100%]  bg-gradient-to-r from-purple-700 via-red-500 to-white z-0" style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }}></div>
   // <DisplayExpense id="expenseDisplay"  expenses={expenses}/>
   //<DashBoard id="expenseDashboard" expenses={expenses}/>
+
+  //{`${ designatedComponent === "history" ? "h-full" : "h-full"} bg-amber-400 w-3/4`}
