@@ -147,6 +147,7 @@ const clearData = () =>{
         <option value="Insurance">Insurance</option>
         <option value="Education">Education</option>
         <option value="Rent">Rent</option>
+        <option value="Rent">Finance/interest Charges</option>
         <option value="Miscellaneous">Miscellaneous</option>
       </select>
     </div>

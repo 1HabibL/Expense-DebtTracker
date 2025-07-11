@@ -19,8 +19,8 @@ return(
       <li value="history" onClick={() => setdesignatedComponent("history")} className="hover:text-cyan-300 transition duration-200 cursor-pointer">
        History
       </li>
-      <li value="cards" onClick={() => setdesignatedComponent("cards")} className="hover:text-cyan-300 transition duration-200 cursor-pointer">
-        Cards
+      <li value="cards" onClick={() => setdesignatedComponent("accounts")} className="hover:text-cyan-300 transition duration-200 cursor-pointer">
+        Accounts
       </li>
     </ul>
   </nav>

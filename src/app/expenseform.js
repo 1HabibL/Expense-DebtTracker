@@ -91,9 +91,6 @@ const clearData = () =>{
             setfiltersStatus(false);
             localStorage.removeItem("expenseFilter")
         };
-
-
-  
  //Function to edit Expenses in Expense LIst
  const handleEdit = (index) => {
     // Copy of current expenses array

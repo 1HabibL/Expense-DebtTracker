@@ -8,6 +8,7 @@ import InputForm from "./inputForm";
 import NavBar from "./navbar";
 import SideBar from "./sideBar";
 import DisplayExpense from "./expenseDisplay";
+import ExpenseAccount from "./expenseAccounts"
 
 
 export default function Home() {
@@ -19,7 +20,8 @@ const [designatedBaseComponent, setdesignatedBaseComponent] = useState("home")
 
 const appComponents = [
   {id: "home",component: <DisplayExpense expenses={expenses} /> },
-  {id: 'dashboards',component: <DashBoard expenses={expenses} />}
+  {id: 'dashboards',component: <DashBoard expenses={expenses} />},
+  {id: 'accounts',component: <ExpenseAccount />}
 ]
 
 const baseComponents = [
@@ -28,9 +30,16 @@ const baseComponents = [
   {id: 'dashboards',component: <MonthlyexpenseForm expenses={expenses} setExpenses={setExpenses}/>},
 ]
 
+const forms = [
+  {id:'history',component: <InputForm expenses={expenses} setExpenses={setExpenses}/>},
+   {id:'home',component: <InputForm expenses={expenses} setExpenses={setExpenses}/>},
+   {id:'dashboards',component: <InputForm expenses={expenses} setExpenses={setExpenses}/>},
+
+]
 
 const decidedComponent = appComponents.filter((compDisplay) => compDisplay.id == designatedComponent)
 const decidedBaseComponent = baseComponents.filter((bodyDisplay) => bodyDisplay.id == designatedComponent)
+const decidedFormComponent =  forms.filter((formsDisplay) =>  formsDisplay.id == designatedComponent)
 
 useEffect(() => {
   const targetComponent = localStorage.getItem("targetComponent");
@@ -39,23 +48,12 @@ useEffect(() => {
   }
 }, [])
 
-/*
-useEffect(() =>{
-  const targetBaseComponent = localStorage.getItem("targetBaseComponent");
-  if (targetBaseComponent){
-    setdesignatedBaseComponent(targetBaseComponent)
-  }
-}, [])
-*/
+
 //Save components whenever it changes
 useEffect(() => {
   localStorage.setItem('targetComponent', designatedComponent)
 }, [designatedComponent])
-/*
-useEffect(() => {
-  localStorage.setItem('targetBaseComponent', designatedBaseComponent)
-}, [designatedBaseComponent])
-*/
+
 return(
     <div className="bg-[#f8f9fa]">
       <NavBar />
@@ -80,11 +78,14 @@ return(
               )
               }
                   <div className="ml-auto mt-13">
-                  <InputForm  expenses={expenses} setExpenses={setExpenses}/>
+
+                    {
+               decidedFormComponent.map(({id, component}) =>
+              <div id="baseComponent"className="w-3/4" key={id}>{component}</div>
+              )
+              }
                   </div>
                 </div>
-
-
                 </div>
             </div>
           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}          {/*COMPONENT A1 */}          
