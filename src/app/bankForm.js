@@ -8,9 +8,7 @@ function BankForm({ isHidden, setIsHidden, onSubmit}){
     const [accountType, setaccountType] = useState("")
     //Bank Account info
      const [bankAccountType, setbankAccountType] = useState("")
-    const [transitNumber, settransitNumber] = useState("")
     const [financialInstitution, setfinancialInstitution] = useState("")
-    const [institutionNumber, setinstitutionNumber] = useState("")
     const [accountNumber, setaccountNumber] = useState("")
     const [balance, setBalance] = useState("")
     const [directDeposit, setdirectDeposit] = useState("")
@@ -27,9 +25,6 @@ const handleClickFilter = () => {
         const passedBankData = {
             accountName: accountName,
             financialInstitution: financialInstitution,
-            transitNumber: transitNumber,
-            institutionNumber: institutionNumber,
-            accountNumber: accountNumber,
             balance: balance
         }
 
@@ -105,47 +100,6 @@ return(<div>
         <option value="Other">Other</option>
       </select>
     </div>
-
-    <div className="flex flex-col">
-      <label htmlFor="date" className="text-sm font-medium text-gray-700 mb-2">
-        Institution Number
-      </label>
-      <input
-        value={institutionNumber}
-        onChange={(e) => setinstitutionNumber(e.target.value)}
-        type="number"
-        name="date"
-        id="date"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      />
-    </div>
-       <div className="flex flex-col">
-      <label htmlFor="accountNumber" className="text-sm font-medium text-gray-700 mb-2">
-        Account Number
-      </label>
-      <input
-        value={accountNumber}
-        onChange={(e) => setaccountNumber(e.target.value)}
-        type="number"
-        name="accountNumber"
-        id="accountNumber"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      />
-    </div>
-     <div className="flex flex-col">
-      <label htmlFor="transitNumber" className="text-sm font-medium text-gray-700 mb-2">
-        Transit Number
-      </label>
-      <input
-        value={transitNumber}
-        onChange={(e) => settransitNumber(e.target.value)}
-        type="number"
-        name="transitNumber"
-        id="transitNumber"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      />
-    </div>
-    
   </div>
 
   {/* Section 3 */}

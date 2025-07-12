@@ -1,13 +1,13 @@
 "use client"
 import React, { useEffect, useState } from "react"
-function CreditForm({ isHidden, setIsHidden }){
+function CreditForm({ isHidden, setIsHidden, onSubmit }){
     const [creditData, setcreditData] = useState({})
     const [accountName, setaccountName] = useState("")
     //credit card Info
     const[creditCardNumber, setcreditCardNumber] = useState("")
     const [creditCardType, setcreditCardType] = useState ("")
     const [creditLimit, setcreditLimit] = useState ("")
-
+    const [companyName, setcompanyName] = useState ("")
     //
     const handleClick = () => {
     setIsHidden(!isHidden)
@@ -16,17 +16,17 @@ const handleClickFilter = () => {
     setFilterIsHidden(!filterIsHidden)
 
 }
-
     const newCreditAccount = (event) =>{
         event.preventDefault();
-
         const passedCreditData = {
             accountName: accountName,
             creditCardNumber: creditCardNumber,
             creditCardType: creditCardType,
             creditLimit: creditLimit,
         }
-        setAccounts((prevData) => [...prevData, passedCreditData])
+
+        onSubmit(passedCreditData)
+         setIsHidden(true);
         console.log("accounts Array:", creditData)
     }
 
@@ -78,13 +78,13 @@ return(<div>
       </label>
       
        <input
-        value={accountName}
-        onChange={(e) => setaccountName(e.target.value)}
+        value={companyName}
+        onChange={(e) => setcompanyName(e.target.value)}
         type="text"
         name="accountName"
         id="accountName"
         className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-        placeholder="e.g. BMO MasterCard, American Express Black, CIBC Line of Credit.."
+        placeholder="e.g. BMO, HSBC, Walmart, Uber...."
       />
     
     </div>

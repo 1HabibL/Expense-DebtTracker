@@ -11,10 +11,7 @@ function ExpenseAccount(){
     const [accountType, setaccountType] = useState("")
     //Bank Account info
      const [bankAccountType, setbankAccountType] = useState("")
-    const [transitNumber, settransitNumber] = useState("")
     const [financialInstitution, setfinancialInstitution] = useState("")
-    const [institutionNumber, setinstitutionNumber] = useState("")
-    const [accountNumber, setaccountNumber] = useState("")
     const [balance, setBalance] = useState("")
     const [directDeposit, setdirectDeposit] = useState("")
     //credit card Info
@@ -24,33 +21,48 @@ function ExpenseAccount(){
     //UI Functionalities
     const [isHidden,setIsHidden] = useState(true)
     const [formIsHidden, setformIsHidden] = useState(false)
+    const [hasLoaded, setHasLoaded] = useState(false);
+
    
 //UI Hidden
     const handleClick = () => {
       event.preventDefault();
     setIsHidden(!isHidden)
 };
-
     const handleCancelClick = () => {
       event.preventDefault();
     setformIsHiddenn(!formIsHidden)
 };
+
+//load Data from local Storage
+
+useEffect(() => {
+  const savedData = localStorage.getItem('submittedAccountData')
+  if (savedData){setAccounts(JSON.parse(savedData))}
+  setHasLoaded(true); // tell React we loaded initial data
+
+}, [])
+
+
+//save Data to local Storage
+useEffect(() => {
+  if (hasLoaded) {
+  localStorage.setItem("submittedAccountData", JSON.stringify(account))
+}}, [account, hasLoaded])
+
 
 //function to update accounts
 const handleBankDataSubmit = (data) =>{
 setAccounts((prevData) => [...prevData, data])
 }
 
-const newCredInfo = (event) =>{
-  event.preventDefault();
-emergedCredit = creditData
-setAccounts((prevData) => [...prevData, event,emergedBank])
+const handleCreditDataSubmit = (data) =>{
+setAccounts((prevData) => [...prevData, data])
 }
-
 
     const accountComponents = [
   {id:"bankAccount", component: <BankForm setIsHidden={setIsHidden} onSubmit={handleBankDataSubmit}/> },
-  {id:'creditAccount', component: <CreditForm  setIsHidden={setIsHidden}/>},
+  {id:'creditAccount', component: <CreditForm  setIsHidden={setIsHidden} onSubmit={handleCreditDataSubmit}/>},
     ]
 
     let chosenForm = accountComponents.filter((targetForm) => targetForm.id === designatedAccount)
@@ -117,16 +129,54 @@ return(
 
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
-<div className="flex bg-pink-200 w">
+<div className="flex flex-col bg-pink-200 w">
   <h1>Accounts </h1>
-
+{account.map((acc, index) => (
+          <div
+            key={index}
+            className="w-1/2 h-auto bg-white shadow mb-2 rounded p-4 border border-gray-200"
+          >
+            <p className="font-bold">{acc.accountName}</p>
+            {acc.creditCardType ? (
+              <>
+                <p>{acc.creditCardType}</p>
+                <p>Credit Limit: ${acc.creditLimit}</p>
+              </>
+            ) : (
+              <>
+                <p>{acc.financialInstitution}</p>
+                <p>Balance: ${acc.balance}</p>
+              </>
+            )}
+             </div>
+        ))}
 
 </div>
-
-
-
 </div>
 )
 } 
 export default ExpenseAccount;
 
+
+/*
+{
+  if (targetForm.id === bankAccount) {
+account.map((acc, index) =>(
+  <div key={index} className="w-1/2 h-[500px] bg-white shadow mb-2 rounded">
+    <p>{acc.accountName}</p>
+    <p>Institution: {acc.financialInstitution}</p>
+    <p>Balance: ${acc.balance}</p>
+    </div>
+))
+} else {
+
+  account.map((acc, index) =>(
+  <div key={index} className="w-1/2 h-[500px] bg-white shadow mb-2 rounded">
+    <p>{acc.accountName}</p>
+    <p>company: {acc.creditLimit}</p>
+    <p>credit limit: ${acc.balance}</p>
+    <p>card type: ${acc.creditCardType}</p>
+    </div>
+))
+}
+} */
