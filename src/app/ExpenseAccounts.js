@@ -60,6 +60,13 @@ const handleCreditDataSubmit = (data) =>{
 setAccounts((prevData) => [...prevData, data])
 }
 
+//delete function
+const deleteAccount = (index) =>{
+  const newAccounts = account.filter((_,i) => i !== index);
+  setAccounts(newAccounts)
+}
+
+
     const accountComponents = [
   {id:"bankAccount", component: <BankForm setIsHidden={setIsHidden} onSubmit={handleBankDataSubmit}/> },
   {id:'creditAccount', component: <CreditForm  setIsHidden={setIsHidden} onSubmit={handleCreditDataSubmit}/>},
@@ -125,8 +132,6 @@ return(
 {chosenForm.map(({id, component}) => (<div key={id}>{component}</div>))}
 </div>
 
-
-
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
 <div className="flex flex-col bg-pink-200 w">
@@ -134,18 +139,91 @@ return(
 {account.map((acc, index) => (
           <div
             key={index}
-            className="w-1/2 h-auto bg-white shadow mb-2 rounded p-4 border border-gray-200"
+            className="w-1/2 h-[200px] bg-white shadow mb-2 rounded p-4 border border-gray-200"
           >
-            <p className="font-bold">{acc.accountName}</p>
-            {acc.creditCardType ? (
-              <>
-                <p>{acc.creditCardType}</p>
+      
+            {acc.creditType ? (
+                  acc.creditType === "CreditCard" ? (
+                //Credit card UI
+                   <div>
+                <p className="font-bold">{acc.accountName}</p>
+                <p>Credit Type:${acc.creditType}</p>
                 <p>Credit Limit: ${acc.creditLimit}</p>
-              </>
+                <p>Last 4 Digits: ${acc.lastFour}</p>
+                 <p> creditCardType: ${acc.creditCardType}</p>
+                  <button
+                  onClick={() => deleteAccount(index)}
+                  className="bg-red-300 hover:bg-red-600 text-white p-2 rounded-xl transition"
+                ></button>
+                </div>
+                  ) : (
+                    //LINE OF CREDIT UI
+           <div
+  id="lineofCredit"
+  className="bg-amber-50 p-8 rounded-2xl shadow-xl border border-gray-300"
+>
+  {/* Header Section */}
+  <div className="flex justify-between items-center mb-6">
+    <p className="text-3xl font-bold text-gray-800">{acc.accountName}</p>
+    <p id="creditType" className="text-lg font-medium text-gray-700">
+      {acc.creditType}
+    </p>
+  </div>
+
+  {/* Data Section */}
+  <div className="flex justify-between text-center mb-6">
+    {/* Balance */}
+    <div className="w-1/3">
+      <p className="text-2xl font-semibold text-gray-800">9999</p>
+      <hr className="border-t border-gray-400 my-2" />
+      <p className="text-sm text-gray-600">Balance</p>
+    </div>
+
+    {/* Utilization */}
+    <div className="w-1/3">
+      <p className="text-2xl font-semibold text-gray-800">%45</p>
+      <hr className="border-t border-gray-400 my-2" />
+      <p className="text-sm text-gray-600">Utilization</p>
+    </div>
+
+    {/* Credit Limit */}
+    <div className="w-1/3">
+      <p className="text-2xl font-semibold text-gray-800">${acc.creditLimit}</p>
+      <hr className="border-t border-gray-400 my-2" />
+      <p className="text-sm text-gray-600">Credit Limit</p>
+    </div>
+  </div>
+
+  {/* (Optionally, you can add another line for the provider if needed) */}
+  <div className="mb-6 text-left">
+    <p className="text-sm text-gray-600">
+      Offered by: <span className="font-medium text-gray-800">{acc.financialInstitution}</span>
+    </p>
+  </div>
+
+  {/* Action Button */}
+  <div className="flex justify-end">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-red-500 hover:bg-red-700 text-white px-5 py-2 rounded-lg transition"
+    >
+      Delete Account
+    </button>
+  </div>
+</div>
+
+                  )
             ) : (
               <>
+              <div>
+                <p className="font-bold">{acc.accountName}</p>
                 <p>{acc.financialInstitution}</p>
                 <p>Balance: ${acc.balance}</p>
+                  <button
+                  onClick={() => deleteAccount(index)}
+                  className="bg-red-300 hover:bg-red-600 text-white p-2 rounded-xl transition"
+                ></button>
+                </div>
               </>
             )}
              </div>

@@ -46,10 +46,10 @@ if(savedFilters){
 }
 }, []);
 
-        //function to delete selected expense 
-        const handleDelete = (index) => {
-            const newExpenses = expenses.filter((_, i) => i !== index);
-            setExpenses(newExpenses)
+//function to delete selected expense 
+const handleDelete = (index) => {
+const newExpenses = expenses.filter((_, i) => i !== index);
+setExpenses(newExpenses)
         } 
 //function to clear all stored data
 const clearData = () =>{

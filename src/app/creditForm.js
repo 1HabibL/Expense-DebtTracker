@@ -4,9 +4,10 @@ function CreditForm({ isHidden, setIsHidden, onSubmit }){
     const [creditData, setcreditData] = useState({})
     const [accountName, setaccountName] = useState("")
     //credit card Info
-    const[creditCardNumber, setcreditCardNumber] = useState("")
+    const[creditType, setcreditType] = useState("")
     const [creditCardType, setcreditCardType] = useState ("")
     const [creditLimit, setcreditLimit] = useState ("")
+    const [lastFour, setlastFour] = useState ("")
     const [companyName, setcompanyName] = useState ("")
     //
     const handleClick = () => {
@@ -20,8 +21,9 @@ const handleClickFilter = () => {
         event.preventDefault();
         const passedCreditData = {
             accountName: accountName,
-            creditCardNumber: creditCardNumber,
+            creditType: creditType,
             creditCardType: creditCardType,
+            lastFour: lastFour,
             creditLimit: creditLimit,
         }
 
@@ -41,7 +43,7 @@ return(<div>
   {/* Section 1 */}
 
     <div className="flex flex-col">
-      <label htmlFor="expenseName" className="text-sm font-medium text-gray-700 mb-2">
+      <label htmlFor="accountName" className="text-sm font-medium text-gray-700 mb-2">
         Account Name
       </label>
       <input
@@ -56,7 +58,7 @@ return(<div>
     </div>
 
     <div className="flex flex-col">
-      <label htmlFor="amount" className="text-sm font-medium text-gray-700 mb-2">
+      <label htmlFor="creditLimit" className="text-sm font-medium text-gray-700 mb-2">
         Credit Limit
       </label>
       <input
@@ -73,7 +75,7 @@ return(<div>
   {/* Section 2 */}
   <div className="grid md:grid-cols-2 gap-6 mb-4">
     <div className="flex flex-col">
-      <label htmlFor="category" className="text-sm font-medium text-gray-700 mb-2">
+      <label htmlFor="company" className="text-sm font-medium text-gray-700 mb-2">
       Company
       </label>
       
@@ -91,8 +93,23 @@ return(<div>
   </div>
 
   {/* Section 3 */}
-  <div className="mb-4">
-
+  <div className="mb-4 flex">
+    <div  className="w-1/8">
+       <label htmlFor="creditType" className="text-sm font-medium text-gray-700 mb-2 block">
+      Credit Type
+    </label>
+   <select
+        value={creditType}
+        onChange={(e) => setcreditType(e.target.value)}
+        name="creditType"
+        id="creditType"
+        className="rounded-lg border border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      ><option value="">Select</option>
+        <option value="CreditCard">Credit Card</option>
+        <option value="Line of Credit">Line of Credit</option>
+      </select>
+      </div>
+      <div className="w-1/8">
      <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
       Card Type
     </label>
@@ -101,12 +118,29 @@ return(<div>
         onChange={(e) => setcreditCardType(e.target.value)}
         name="accountType"
         id="accountType"
-        className="rounded-lg border border-gray-300 p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        className="rounded-lg border border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
       ><option value="">Select</option>
         <option value="Visa">Visa</option>
         <option value="MasterCard">MasterCard</option>
         <option value="Amex">Amex</option>
       </select>
+      </div>
+           <div className="w-1/5">
+     <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
+      Last 4 Digits
+ </label>
+       <input
+        value={lastFour}
+        onChange={(e) => setlastFour(e.target.value)}
+        type="text"
+        name="lastFour"
+        id="lastFour"
+        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        placeholder="1234"
+      />
+
+   
+      </div>
   </div>
 
   {/* Buttons */}
