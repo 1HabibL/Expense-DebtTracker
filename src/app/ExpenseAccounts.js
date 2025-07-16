@@ -139,91 +139,196 @@ return(
 {account.map((acc, index) => (
           <div
             key={index}
-            className="w-1/2 h-[200px] bg-white shadow mb-2 rounded p-4 border border-gray-200"
+            className="w-1/2 bg-white shadow mb-2 rounded p-4 border border-gray-200"
           >
       
             {acc.creditType ? (
                   acc.creditType === "CreditCard" ? (
                 //Credit card UI
-                   <div>
-                <p className="font-bold">{acc.accountName}</p>
-                <p>Credit Type:${acc.creditType}</p>
-                <p>Credit Limit: ${acc.creditLimit}</p>
-                <p>Last 4 Digits: ${acc.lastFour}</p>
-                 <p> creditCardType: ${acc.creditCardType}</p>
-                  <button
-                  onClick={() => deleteAccount(index)}
-                  className="bg-red-300 hover:bg-red-600 text-white p-2 rounded-xl transition"
-                ></button>
-                </div>
-                  ) : (
-                    //LINE OF CREDIT UI
-           <div
-  id="lineofCredit"
-  className="bg-amber-50 p-8 rounded-2xl shadow-xl border border-gray-300"
+                <div id="creditContainer" className="flex max-w-3xl justify-between bg-amber-300">
+                 <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white rounded-2xl shadow-xl p-6 w-full max-w-md h-56 relative overflow-hidden">
+
+    {/* Top Row: Bank or Card Name */}
+    <div className="flex justify-between items-center mb-4 ">
+      <h2 className="text-lg font-semibold">{acc.accountName}</h2>
+      <span className="text-sm italic opacity-80">{acc.creditCardType}</span>
+    </div>
+
+    {/* Chip Icon & Card Number */}
+    <div className="mb-4">
+      <div className="w-10 h-7 bg-yellow-400 rounded-sm mb-2"></div>
+      <p className="tracking-widest text-xl font-mono">
+        •••• •••• •••• {acc.lastFour}
+      </p>
+    </div>
+
+    {/* Bottom Info Row */}
+    <div className="flex justify-between text-sm font-light mt-auto">
+      <div>
+        <p className="uppercase text-xs opacity-80">Type</p>
+        <p>{acc.creditType}</p>
+      </div>
+      <div>
+        <p className="uppercase text-xs opacity-80">Limit</p>
+        <p>${acc.creditLimit}</p>
+      </div>
+    </div>
+
+
+       </div>
+       {/* INFO SHEET*/}
+      <div
+  id="infoSheet"
+  className="bg-white flex justify-between items-center border border-gray-300 rounded-2xl shadow-md p-6 space-x-4"
 >
-  {/* Header Section */}
-  <div className="flex justify-between items-center mb-6">
-    <p className="text-3xl font-bold text-gray-800">{acc.accountName}</p>
-    <p id="creditType" className="text-lg font-medium text-gray-700">
-      {acc.creditType}
-    </p>
+  {/* Left Section */}
+  <div className="flex flex-col justify-center">
+    <h2 className="text-sm text-gray-500">Balance</h2>
+    <p className="text-2xl font-bold text-gray-800">${acc.balance ?? "9999"}</p>
+
+    <h2 className="text-sm mt-4 text-gray-500">Credit Limit</h2>
+    <p className="text-2xl font-bold text-gray-800">${acc.creditLimit ?? "9999"}</p>
   </div>
 
-  {/* Data Section */}
-  <div className="flex justify-between text-center mb-6">
-    {/* Balance */}
-    <div className="w-1/3">
-      <p className="text-2xl font-semibold text-gray-800">9999</p>
-      <hr className="border-t border-gray-400 my-2" />
+  {/* Vertical Divider */}
+  <div className="w-px bg-gray-300 h-16 mx-2" />
+
+  {/* Right Section */}
+  <div className="flex flex-col justify-center items-center">
+    <p className="text-3xl font-extrabold text-purple-600">
+      {acc.utilization ?? "45%"}
+    </p>
+    <p className="text-sm text-gray-600">Utilization</p>
+  </div>
+ 
+</div>
+
+<div>
+ <div className="flex justify-end">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition"
+    >
+      Delete
+    </button>
+  </div>
+
+    <div className="flex justify-end ">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
+    >
+      Edit
+    </button>
+  </div>
+    </div>
+ </div>
+    ) : (
+    //LINE OF CREDIT UI
+    <div className="flex max-w-3xl justify-between bg-amber-300">
+        <div className="bg-gradient-to-br from-gray-100 to-white border border-gray-300 rounded-2xl shadow-md p-6 w-full max-w-2xl">
+  {/* Header: Account Name & Credit Type */}
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="text-xl font-semibold text-gray-800">{acc.accountName}</h2>
+    <span className="text-sm text-gray-600 italic">{acc.creditType}</span>
+  </div>
+
+  {/* Main Info Row */}
+  <div className="grid grid-cols-3 gap-6 text-center">
+    
+    <div>
+      <p className="text-2xl font-mono text-gray-800">${acc.balance ?? "9999"}</p>
+      <hr className="border-t border-gray-400 my-2 w-3/4 mx-auto" />
       <p className="text-sm text-gray-600">Balance</p>
     </div>
 
-    {/* Utilization */}
-    <div className="w-1/3">
-      <p className="text-2xl font-semibold text-gray-800">%45</p>
-      <hr className="border-t border-gray-400 my-2" />
+    <div>
+      <p className="text-2xl font-mono text-gray-800">{acc.utilization ?? "45%"}%</p>
+      <hr className="border-t border-gray-400 my-2 w-3/4 mx-auto" />
       <p className="text-sm text-gray-600">Utilization</p>
     </div>
 
-    {/* Credit Limit */}
-    <div className="w-1/3">
-      <p className="text-2xl font-semibold text-gray-800">${acc.creditLimit}</p>
-      <hr className="border-t border-gray-400 my-2" />
+    <div>
+      <p className="text-2xl font-mono text-gray-800">${acc.creditLimit}</p>
+      <hr className="border-t border-gray-400 my-2 w-3/4 mx-auto" />
       <p className="text-sm text-gray-600">Credit Limit</p>
     </div>
   </div>
 
-  {/* (Optionally, you can add another line for the provider if needed) */}
-  <div className="mb-6 text-left">
-    <p className="text-sm text-gray-600">
-      Offered by: <span className="font-medium text-gray-800">{acc.financialInstitution}</span>
-    </p>
+  {/* Footer: Delete Button */}
+  <div className="flex justify-end mt-6">
+  
   </div>
-
-  {/* Action Button */}
-  <div className="flex justify-end">
-    <button
-      onClick={() => deleteAccount(index)}
-      className="bg-red-500 hover:bg-red-700 text-white px-5 py-2 rounded-lg transition"
-    >
-      Delete Account
-    </button>
-  </div>
+ 
 </div>
 
-                  )
+<div>
+<div className="flex justify-end ">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition"
+    >
+      Delete
+    </button>
+  </div>
+
+    <div className="flex justify-end ">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
+    >
+      Edit
+    </button>
+    </div>
+  </div>
+</div>
+        )
             ) : (
               <>
-              <div>
-                <p className="font-bold">{acc.accountName}</p>
-                <p>{acc.financialInstitution}</p>
-                <p>Balance: ${acc.balance}</p>
-                  <button
-                  onClick={() => deleteAccount(index)}
-                  className="bg-red-300 hover:bg-red-600 text-white p-2 rounded-xl transition"
-                ></button>
-                </div>
+              <div className="flex max-w-3xl justify-between bg-amber-300">
+  
+           <div className="bg-white border border-gray-300 rounded-xl shadow-md p-5 h-full w-full 
+             max-w-2xl">
+  {/* Header */}
+  <div className="flex justify-between items-center mb-3">
+    <h2 className="text-xl font-semibold text-gray-800">{acc.accountName}</h2>
+    <span className="text-sm text-gray-500">{acc.financialInstitution}</span>
+  </div>
+
+  {/* Divider Line */}
+  <div className="border-t border-dashed border-gray-300 mb-4"></div>
+
+  {/* Balance Section */}
+  <div className="flex justify-between items-center mb-3">
+    <p className="text-sm text-gray-600">Balance</p>
+    <p className="text-lg font-bold text-green-600">${acc.balance}</p>
+  </div>
+
+  {/* Account Numbers (optional for realism) */}
+
+
+  {/* Delete Button */}
+</div>
+<div>
+<div className="flex justify-end">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow transition"
+    >
+      Delete
+    </button>
+  </div>
+
+    <div className="flex justify-end ">
+    <button
+      onClick={() => deleteAccount(index)}
+      className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
+    >
+      Edit
+    </button>
+    </div>
+  </div>
+</div>
               </>
             )}
              </div>
