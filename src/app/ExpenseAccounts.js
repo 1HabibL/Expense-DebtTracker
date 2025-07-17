@@ -74,6 +74,20 @@ const deleteAccount = (index) =>{
 
     let chosenForm = accountComponents.filter((targetForm) => targetForm.id === designatedAccount)
 
+const logoMap = [{company:"RBC", logo:'/images/RBCLogo.png'}, {company:"BMO", logo:'/images/bmoLogo.png'}, {company:"CIBC", logo:'/images/cibcLogo.png'}, 
+ {company:"EQBank", logo:'/images/eqLogo.png'}, {company:"TDBank", logo:'/images/TDBankLogo.png'}, {company:"Scotiabank", logo:'/images/scotiaLogo.png'},
+ {company:"NationalBankofCanada", logo:'/images/nationalLogo.png'}, {company:"Tangerine", logo:'/images/TangLogo.svg'}, 
+ {company:"HSBC", logo:'/images/hsbcLogo.png'}, {company:'LaurentianBank' , logo:'/images/laurentianLogo.webp'}, {company:"Other",logo:'/images/defaultLogo.png'}
+]
+
+//const logoSrc = logoMap[account.financialInstitution] || '/images/defaultLogo.png'; 
+
+//Logo Generating Function
+
+function returnLogo(object){
+  let companyLogo = logoMap.filter((logoInfo) => logoInfo.company === object)
+  return companyLogo
+}
 
 return(
 <div className="min-h-screen px-8 py-6">
@@ -145,7 +159,7 @@ return(
             {acc.creditType ? (
                   acc.creditType === "CreditCard" ? (
                 //Credit card UI
-                <div id="creditContainer" className="flex max-w-3xl justify-between bg-amber-300">
+                <div id="creditContainer" className="flex max-w-3xl justify-between 0">
                  <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white rounded-2xl shadow-xl p-6 w-full max-w-md h-56 relative overflow-hidden">
 
     {/* Top Row: Bank or Card Name */}
@@ -306,6 +320,12 @@ return(
 
   {/* Account Numbers (optional for realism) */}
 
+   {/* acc.financialInstitution === "BMO" ? (<img className="h-[100]" src={`/images/bmoLogo.png`} alt="Bmo" />):
+(<img className="h-[100]" src={`/images/RBCLogo.png`} alt="bmo" />) */}
+  
+{
+<img className="h-[100]" src={returnLogo(acc.financialInstitution)[0].logo} />
+}
 
   {/* Delete Button */}
 </div>
