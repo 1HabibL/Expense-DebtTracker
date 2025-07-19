@@ -58,7 +58,7 @@ return(
     <div className="bg-[#f8f9fa]">
       <NavBar />
         <div className="flex relative">
-        <SideBar designatedComponent={designatedComponent} setdesignatedComponent={setdesignatedComponent} />
+        <SideBar  designatedComponent={designatedComponent} setdesignatedComponent={setdesignatedComponent} />
           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}
           <div className="flex flex-col w-screen z-10 relative" id="fullExpenseForm">
               <div className="flex flex-col w-4/4 ">

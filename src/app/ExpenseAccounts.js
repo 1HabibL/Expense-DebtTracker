@@ -22,10 +22,11 @@ function ExpenseAccount(){
     const [isHidden,setIsHidden] = useState(true)
     const [formIsHidden, setformIsHidden] = useState(false)
     const [hasLoaded, setHasLoaded] = useState(false);
-
+//Editing Functionalities
+    const [isEditing, setIsEditing] = useState (false)  
    
 //UI Hidden
-    const handleClick = () => {
+    const handleClick = () => {  
       event.preventDefault();
     setIsHidden(!isHidden)
 };
@@ -77,26 +78,30 @@ const deleteAccount = (index) =>{
 const logoMap = [{company:"RBC", logo:'/images/RBCLogo.png'}, {company:"BMO", logo:'/images/bmoLogo.png'}, {company:"CIBC", logo:'/images/cibcLogo.png'}, 
  {company:"EQBank", logo:'/images/eqLogo.png'}, {company:"TDBank", logo:'/images/TDBankLogo.png'}, {company:"Scotiabank", logo:'/images/scotiaLogo.png'},
  {company:"NationalBankofCanada", logo:'/images/nationalLogo.png'}, {company:"Tangerine", logo:'/images/TangLogo.svg'}, 
- {company:"HSBC", logo:'/images/hsbcLogo.png'}, {company:'LaurentianBank' , logo:'/images/laurentianLogo.webp'}, {company:"Other",logo:'/images/defaultLogo.png'}
+ {company:"HSBC", logo:'/images/hsbcLogo.png'}, {company:'LaurentianBank' , logo:'/images/laurentianLogo.webp'}, {company:"Other",logo:'/images/defaultLogo.png'},
+ //CREDIT CARD LOGOS
+ {company:"Visa", logo:'/images/visaLogo.png'},{company:"MasterCard", logo:'/images/mcLogo.png'},
+ {company:"Amex", logo:'/images/aeLogo.png'},  
 ]
-
 //const logoSrc = logoMap[account.financialInstitution] || '/images/defaultLogo.png'; 
 
 //Logo Generating Function
-
 function returnLogo(object){
   let companyLogo = logoMap.filter((logoInfo) => logoInfo.company === object)
   return companyLogo
 }
 
+//ACCOUNTS EDIT PROGRAM
+
+
 return(
-<div className="min-h-screen px-8 py-6">
+<div className="px-8 py-6 overflow-hidden max-h-[1070px]">
          <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
 
   <h1 className="text-3xl font-bold text-gray-900 mb-4">💼 Expense Accounts</h1>
-<div className="flex">
+<div className="flex ">
   <button
     onClick={handleClick}
     className="bg-blue-400 h-10 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
@@ -106,7 +111,7 @@ return(
 
   <div
     className={`transition-all duration-500 ease-in-out ${
-      isHidden ? 'opacity-0 max-h-0 overflow-hidden' : 'opacity-100 max-h-[1000px]'
+      isHidden ? 'opacity-0 max-h-0 overflow-hidden' : 'opacity-100 max-h-[1000px] '
     }`}
   >
     <form
@@ -148,18 +153,17 @@ return(
 
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
-<div className="flex flex-col bg-pink-200 w">
-  <h1>Accounts </h1>
+<div className="flex flex-col bg-pink-200 overflow-y-auto max-h-[1070px] space-y-4 w-1/2">
 {account.map((acc, index) => (
           <div
             key={index}
-            className="w-1/2 bg-white shadow mb-2 rounded p-4 border border-gray-200"
+            className="w-full bg-white shadow mb-2 rounded p-4 border border-gray-200"
           >
       
             {acc.creditType ? (
                   acc.creditType === "CreditCard" ? (
                 //Credit card UI
-                <div id="creditContainer" className="flex max-w-3xl justify-between 0">
+                <div id="creditContainer" className="flex justify-between 0">
                  <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white rounded-2xl shadow-xl p-6 w-full max-w-md h-56 relative overflow-hidden">
 
     {/* Top Row: Bank or Card Name */}
@@ -177,14 +181,13 @@ return(
     </div>
 
     {/* Bottom Info Row */}
-    <div className="flex justify-between text-sm font-light mt-auto">
+    <div className="flex justify-between text-2xl mt-auto">
       <div>
-        <p className="uppercase text-xs opacity-80">Type</p>
-        <p>{acc.creditType}</p>
+        <p className="uppercase opacity-80">Limit</p>
+        <p className="">${acc.creditLimit}</p>
       </div>
       <div>
-        <p className="uppercase text-xs opacity-80">Limit</p>
-        <p>${acc.creditLimit}</p>
+     {<img className="h-[70]" src={returnLogo(acc.creditCardType)[0].logo} /> }
       </div>
     </div>
 
@@ -236,10 +239,33 @@ return(
     </button>
   </div>
     </div>
+    <div>
+      <form className="bg-white flex flex-col items-center border border-gray-300 rounded-2xl shadow-md  ">
+        <label>Account Name</label>
+        <input type="text"></input>
+         <label>creditCardType</label>
+           <select
+        value={creditCardType}
+        onChange={(e) => setcreditCardType(e.target.value)}
+        name="accountType"
+        id="accountType"
+        className="rounded-lg border border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      ><option value="">Select</option>
+        <option value="Visa">Visa</option>
+        <option value="MasterCard">MasterCard</option>
+        <option value="Amex">Amex</option>
+      </select>
+        <label>last digits Four</label>
+        <input></input>
+         <label>credit limit</label>
+        <input></input>
+      </form>
+    </div>
+
  </div>
     ) : (
     //LINE OF CREDIT UI
-    <div className="flex max-w-3xl justify-between bg-amber-300">
+    <div className="flex max-w-3xl justify-between ">
         <div className="bg-gradient-to-br from-gray-100 to-white border border-gray-300 rounded-2xl shadow-md p-6 w-full max-w-2xl">
   {/* Header: Account Name & Credit Type */}
   <div className="flex justify-between items-center mb-4">
@@ -295,6 +321,16 @@ return(
     </button>
     </div>
   </div>
+     <div>
+      <form className="bg-amber-400">
+        <label>Account Name</label>
+        <input></input>
+         <label>creditCardType</label>
+        <input></input>
+         <label>credit limit</label>
+        <input></input>
+      </form>
+    </div>
 </div>
         )
             ) : (
