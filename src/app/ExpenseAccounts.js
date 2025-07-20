@@ -153,13 +153,12 @@ return(
 
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
-<div className="flex flex-col bg-pink-200 overflow-y-auto max-h-[1070px] space-y-4 w-1/2">
+<div className="flex flex-col bg-pink-200 overflow-y-auto max-h-[1070px] space-y-4 w-3/5">
 {account.map((acc, index) => (
           <div
             key={index}
             className="w-full bg-white shadow mb-2 rounded p-4 border border-gray-200"
           >
-      
             {acc.creditType ? (
                   acc.creditType === "CreditCard" ? (
                 //Credit card UI
@@ -239,29 +238,62 @@ return(
     </button>
   </div>
     </div>
-    <div>
-      <form className="bg-white flex flex-col items-center border border-gray-300 rounded-2xl shadow-md  ">
-        <label>Account Name</label>
-        <input type="text"></input>
-         <label>creditCardType</label>
-           <select
-        value={creditCardType}
-        onChange={(e) => setcreditCardType(e.target.value)}
-        name="accountType"
-        id="accountType"
-        className="rounded-lg border border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      ><option value="">Select</option>
-        <option value="Visa">Visa</option>
-        <option value="MasterCard">MasterCard</option>
-        <option value="Amex">Amex</option>
-      </select>
-        <label>last digits Four</label>
-        <input></input>
-         <label>credit limit</label>
-        <input></input>
-      </form>
+
+  <div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+  <form className="gap-4 items-center">
+    <div className="flex justify-between">
+    <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account</h2>
+    <button
+        type="submit"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition"
+      >
+        Save
+      </button>
+      </div>
+<div className="flex justify-between">
+<div className="flex flex-col">
+    <label className="text-sm font-medium text-gray-600">Account Name</label>
+    <input
+      type="text"
+      placeholder="Account Name"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+    <label className="text-sm font-medium text-gray-600">Card Type</label>
+    <select
+      value={creditCardType}
+      onChange={(e) => setcreditCardType(e.target.value)}
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="">Select</option>
+      <option value="Visa">Visa</option>
+      <option value="MasterCard">MasterCard</option>
+      <option value="Amex">Amex</option>
+    </select>
+</div>
+<div className="flex flex-col">
+    <label className="text-sm font-medium text-gray-600">Last 4 Digits</label>
+    <input
+      type="text"
+      maxLength={4}
+      placeholder="1234"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+    <label className="text-sm font-medium text-gray-600">Credit Limit</label>
+    <input
+      type="number"
+      placeholder="$5000"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    </div>
     </div>
 
+    <div className="col-span-2 flex justify-end">
+      
+    </div>
+  </form>
+</div>
  </div>
     ) : (
     //LINE OF CREDIT UI
