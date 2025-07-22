@@ -36,7 +36,7 @@ return(<div>
 {/*CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  CREIDT FORM  */}
 <form
   id="expenseDataForm"
-  className="bg-white shadow-xl rounded-2xl p-5 w-[1500px]"
+  className="bg-white shadow-xl rounded-2xl p-5 w-[1000px]"
   onSubmit={newCreditAccount}
 >
   <h1>Add New Credit Account</h1>
@@ -93,8 +93,8 @@ return(<div>
   </div>
 
   {/* Section 3 */}
-  <div className="mb-4 flex">
-    <div  className="w-1/8">
+  <div className="mb-4 flex ">
+    <div className="mr-2">
        <label htmlFor="creditType" className="text-sm font-medium text-gray-700 mb-2 block">
       Credit Type
     </label>
@@ -109,7 +109,9 @@ return(<div>
         <option value="Line of Credit">Line of Credit</option>
       </select>
       </div>
-      <div className="w-1/8">
+
+      <div className="mr-2">
+
      <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
       Card Type
     </label>
@@ -119,7 +121,7 @@ return(<div>
         name="accountType"
         id="accountType"
         className="rounded-lg border border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      ><option value="">Select</option>
+      ><option value="Na">Select</option>
         <option value="Visa">Visa</option>
         <option value="MasterCard">MasterCard</option>
         <option value="Amex">Amex</option>

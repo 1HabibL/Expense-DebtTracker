@@ -25,7 +25,7 @@ const handleClickFilter = () => {
         const passedBankData = {
             accountName: accountName,
             financialInstitution: financialInstitution,
-            balance: balance
+            balance: balance,
         }
 
         onSubmit(passedBankData);
@@ -39,13 +39,16 @@ return(<div>
 {/*BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM BANK FORM */}
       <form
   id="expenseDataForm"
-  className="bg-white shadow-xl rounded-2xl p-5 w-[1500px]"
+  className="bg-white shadow-xl rounded-2xl p-5 w-[1000px]"
   onSubmit={newBankAccount}
 >
   <h1>Add New Bank</h1>
   {/* Section 1 */}
 
-    <div className="flex flex-col">
+    <div className="flex  w-full">
+    
+    <div className="flex flex-col w-1/2 mr-2">
+      {/* SECTION ONE COMPONENT ONE */}
       <label htmlFor="expenseName" className="text-sm font-medium text-gray-700 mb-2">
         Account Name
       </label>
@@ -60,24 +63,8 @@ return(<div>
       />
     </div>
 
-    <div className="flex flex-col">
-      <label htmlFor="amount" className="text-sm font-medium text-gray-700 mb-2">
-        Balance
-      </label>
-      <input
-        value={balance}
-        onChange={(e) => setBalance(e.target.value)}
-        type="number"
-        name="balance"
-        id="balance"
-        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-        placeholder="e.g. 25.00"
-      />
-    </div>
 
-  {/* Section 2 */}
-  <div className="grid md:grid-cols-2 gap-6 mb-4">
-    <div className="flex flex-col">
+    <div className="flex flex-col w-1/2 ">
       <label htmlFor="category" className="text-sm font-medium text-gray-700 mb-2">
         Financial Institution
       </label>
@@ -101,14 +88,65 @@ return(<div>
         <option value="LaurentianBank">Laurentian Bank</option>
         <option value="Other">Other</option>
       </select>
+
     </div>
-  </div>
+</div>
+
+{/* Section 2 */}
+<div className="flex w-full">
+    <div className="flex flex-col w-1/2 mr-2">
+      <label htmlFor="amount" className="text-sm font-medium text-gray-700 mb-2">
+        Balance
+      </label>
+      <input
+        value={balance}
+        onChange={(e) => setBalance(e.target.value)}
+        type="number"
+        name="balance"
+        id="balance"
+        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        placeholder="e.g. 25.00"
+      />
+    </div>
+
+    <div className="flex w-1/2 flex-col ">
+
+      <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
+    Direct Deposit Amount
+    </label>
+    <input
+      value={directDeposit}
+      onChange={(e) => setdirectDeposit(e.target.value)}
+      type="number"
+      name="directDepositAmount"
+      id="directDepositAmount"
+      className="w-3/4 rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      placeholder="Optional"
+    />
+    </div>
+    </div>
 
   {/* Section 3 */}
-  <div className="mb-4">
+  <div className="mb-4 flex w-full">
+    <div className="mr-2">
+     <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
+      Account Type
+    </label>
+   <select
+        value={accountType}
+        onChange={(e) => setaccountType(e.target.value)}
+        name="accountType"
+        id="accountType"
+        className="rounded-lg border border-gray-300 p-2  focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      ><option value="">Select</option>
+        <option value="Checking">Checking</option>
+        <option value="Savings">Savings</option>
+      </select>
+      </div>
 
-    <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
-    Direct Deposit Amount
+          <div className="flex flex-col">
+      <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
+    Debit Last 4 Digits
     </label>
     <input
       value={directDeposit}
@@ -119,19 +157,8 @@ return(<div>
       className="w-1/2 rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
       placeholder="Optional"
     />
-     <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
-      Account Type
-    </label>
-   <select
-        value={accountType}
-        onChange={(e) => setaccountType(e.target.value)}
-        name="accountType"
-        id="accountType"
-        className="rounded-lg border border-gray-300 p-2 w-1/5 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
-      ><option value="">Select</option>
-        <option value="Checking">Checking</option>
-        <option value="Savings">Savings</option>
-      </select>
+    </div>
+
   </div>
 
   {/* Buttons */}

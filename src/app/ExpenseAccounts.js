@@ -36,7 +36,6 @@ function ExpenseAccount(){
 };
 
 //load Data from local Storage
-
 useEffect(() => {
   const savedData = localStorage.getItem('submittedAccountData')
   if (savedData){setAccounts(JSON.parse(savedData))}
@@ -51,7 +50,6 @@ useEffect(() => {
   localStorage.setItem("submittedAccountData", JSON.stringify(account))
 }}, [account, hasLoaded])
 
-
 //function to update accounts
 const handleBankDataSubmit = (data) =>{
 setAccounts((prevData) => [...prevData, data])
@@ -60,14 +58,11 @@ setAccounts((prevData) => [...prevData, data])
 const handleCreditDataSubmit = (data) =>{
 setAccounts((prevData) => [...prevData, data])
 }
-
 //delete function
 const deleteAccount = (index) =>{
   const newAccounts = account.filter((_,i) => i !== index);
   setAccounts(newAccounts)
 }
-
-
     const accountComponents = [
   {id:"bankAccount", component: <BankForm setIsHidden={setIsHidden} onSubmit={handleBankDataSubmit}/> },
   {id:'creditAccount', component: <CreditForm  setIsHidden={setIsHidden} onSubmit={handleCreditDataSubmit}/>},
@@ -75,7 +70,7 @@ const deleteAccount = (index) =>{
 
     let chosenForm = accountComponents.filter((targetForm) => targetForm.id === designatedAccount)
 
-const logoMap = [{company:"RBC", logo:'/images/RBCLogo.png'}, {company:"BMO", logo:'/images/bmoLogo.png'}, {company:"CIBC", logo:'/images/cibcLogo.png'}, 
+const logoMap = [{company:"Na", logo:'/images/creditCard.png'},{company:"RBC", logo:'/images/RBCLogo.png'}, {company:"BMO", logo:'/images/bmoLogo.png'}, {company:"CIBC", logo:'/images/cibcLogo.png'}, 
  {company:"EQBank", logo:'/images/eqLogo.png'}, {company:"TDBank", logo:'/images/TDBankLogo.png'}, {company:"Scotiabank", logo:'/images/scotiaLogo.png'},
  {company:"NationalBankofCanada", logo:'/images/nationalLogo.png'}, {company:"Tangerine", logo:'/images/TangLogo.svg'}, 
  {company:"HSBC", logo:'/images/hsbcLogo.png'}, {company:'LaurentianBank' , logo:'/images/laurentianLogo.webp'}, {company:"Other",logo:'/images/defaultLogo.png'},
@@ -90,12 +85,9 @@ function returnLogo(object){
   let companyLogo = logoMap.filter((logoInfo) => logoInfo.company === object)
   return companyLogo
 }
-
 //ACCOUNTS EDIT PROGRAM
-
-
 return(
-<div className="px-8 py-6 overflow-hidden max-h-[1070px]">
+<div className="px-8 py-6 ">
          <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
@@ -153,7 +145,7 @@ return(
 
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
-<div className="flex flex-col bg-pink-200 overflow-y-auto max-h-[1070px] space-y-4 w-3/5">
+<div className="flex flex-col bg-pink-200 space-y-4 w-3/5 overflow-y-auto max-h-[1000px]">
 {account.map((acc, index) => (
           <div
             key={index}
@@ -186,7 +178,7 @@ return(
         <p className="">${acc.creditLimit}</p>
       </div>
       <div>
-     {<img className="h-[70]" src={returnLogo(acc.creditCardType)[0].logo} /> }
+     {<img className="h-[70]" src={returnLogo(acc.creditCardType)[0].logo} />}
       </div>
     </div>
 
@@ -239,16 +231,24 @@ return(
   </div>
     </div>
 
-  <div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+    {isEditing ? (<div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
   <form className="gap-4 items-center">
     <div className="flex justify-between">
-    <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account</h2>
+    <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account & Card</h2>
+      <div>
+        <button
+        type="submit"
+        className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition"
+      >
+        X
+      </button>
     <button
         type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition ml-1"
       >
         Save
       </button>
+      </div>
       </div>
 <div className="flex justify-between">
 <div className="flex flex-col">
@@ -293,11 +293,12 @@ return(
       
     </div>
   </form>
-</div>
+</div>):(<div></div>)}
+
  </div>
     ) : (
-    //LINE OF CREDIT UI
-    <div className="flex max-w-3xl justify-between ">
+    //LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI
+    <div className="flex justify-between">
         <div className="bg-gradient-to-br from-gray-100 to-white border border-gray-300 rounded-2xl shadow-md p-6 w-full max-w-2xl">
   {/* Header: Account Name & Credit Type */}
   <div className="flex justify-between items-center mb-4">
@@ -329,6 +330,14 @@ return(
 
   {/* Footer: Delete Button */}
   <div className="flex justify-end mt-6">
+     <div className="flex items-center">
+       <div>
+     {<img className="h-[50] mr-5" src={returnLogo(acc.creditCardType)[0].logo} /> }
+      </div>
+      <p className="tracking-widest text-xl font-mono">
+        •••• •••• •••• {acc.lastFour}
+      </p>
+    </div>
   
   </div>
  
@@ -353,24 +362,82 @@ return(
     </button>
     </div>
   </div>
+
+{isEditing ? (<div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+  <form className="gap-4 items-center">
+    <div className="flex justify-between">
+    <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account & Card</h2>
      <div>
-      <form className="bg-amber-400">
-        <label>Account Name</label>
-        <input></input>
-         <label>creditCardType</label>
-        <input></input>
-         <label>credit limit</label>
-        <input></input>
-      </form>
+        <button
+        type="submit"
+        className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition"
+      >
+        X
+      </button>
+    <button
+        type="submit"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition ml-1"
+      >
+        Save
+      </button>
+      </div>
+      </div>
+<div className="flex justify-between">
+<div className="flex flex-col">
+    <label className="text-sm font-medium text-gray-600">Account Name</label>
+    <input
+      type="text"
+      placeholder="Account Name"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+    <label className="text-sm font-medium text-gray-600">Card Type</label>
+    <select
+      value={creditCardType}
+      onChange={(e) => setcreditCardType(e.target.value)}
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+      <option value="">Select</option>
+      <option value="Visa">Visa</option>
+      <option value="MasterCard">MasterCard</option>
+      <option value="Amex">Amex</option>
+    </select>
+</div>
+<div className="flex flex-col">
+    <label className="text-sm font-medium text-gray-600">Last 4 Digits</label>
+    <input
+      type="text"
+      maxLength={4}
+      placeholder="1234"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+    <label className="text-sm font-medium text-gray-600">Credit Limit</label>
+    <input
+      type="number"
+      placeholder="$5000"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
     </div>
+    </div>
+
+    <div className="col-span-2 flex justify-end">
+      
+    </div>
+  </form>
+</div>): (<div></div>) }
+
+
+
+  
 </div>
         )
             ) : (
-              <>
-              <div className="flex max-w-3xl justify-between bg-amber-300">
-  
+             
+              <div className="flex w-full">
+              <div className="flex w-full max-w-3xl">
            <div className="bg-white border border-gray-300 rounded-xl shadow-md p-5 h-full w-full 
-             max-w-2xl">
+             ">
   {/* Header */}
   <div className="flex justify-between items-center mb-3">
     <h2 className="text-xl font-semibold text-gray-800">{acc.accountName}</h2>
@@ -386,15 +453,16 @@ return(
     <p className="text-lg font-bold text-green-600">${acc.balance}</p>
   </div>
 
-  {/* Account Numbers (optional for realism) */}
 
-   {/* acc.financialInstitution === "BMO" ? (<img className="h-[100]" src={`/images/bmoLogo.png`} alt="Bmo" />):
-(<img className="h-[100]" src={`/images/RBCLogo.png`} alt="bmo" />) */}
-  
+ <div className="flex justify-between items-end"> 
 {
 <img className="h-[100]" src={returnLogo(acc.financialInstitution)[0].logo} />
 }
 
+ <p className="tracking-widest text-xl font-mono">
+        •••• •••• •••• {acc.lastFour}
+      </p>
+      </div>
   {/* Delete Button */}
 </div>
 <div>
@@ -416,8 +484,91 @@ return(
     </button>
     </div>
   </div>
+  </div>
+  {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+  {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+  {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+  {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+  { isEditing ? (  <div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+  <form className="gap-4 items-center">
+    <div className="flex justify-between">
+    <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account & Card</h2>
+    <div>
+        <button
+        type="submit"
+        className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition"
+      >
+        X
+      </button>
+    <button
+        type="submit"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition ml-1"
+      >
+        Save
+      </button>
+      </div>
+      </div>
+<div className="flex justify-between">
+<div className="flex flex-col">
+    <label className="text-sm font-medium text-gray-600">Account Name</label>
+    <input
+      type="text"
+      placeholder="Account Name"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+    <label className="text-sm font-medium text-gray-600">Financial Institution</label>
+    <select
+      value={financialInstitution}
+      onChange={(e) => setfinancialInstitution(e.target.value)}
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    >
+     <option value="">Select</option>
+        <option value="RBC">RBC</option>
+        <option value="BMO">BMO</option>
+        <option value="TDBank">TD Bank</option>
+        <option value="Scotiabank">Scotiabank</option>
+        <option value="CIBC">CIBC</option>
+        <option value="NationalBankofCanada">National Bank of Canada</option>
+        <option value="Tangerine">Tangerine</option>
+        <option value="EQBank">EQ Bank</option>
+        <option value="HSBC">HSBC</option>
+        <option value="LaurentianBank">Laurentian Bank</option>
+        <option value="Other">Other</option>
+      </select>
 </div>
-              </>
+<div className="flex flex-col">
+    <label className="text-sm font-medium text-gray-600">Last 4 Digits</label>
+    <input
+      type="text"
+      maxLength={4}
+      placeholder="1234"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+
+    <label className="text-sm font-medium text-gray-600">New Balance</label>
+    <input
+      type="number"
+      placeholder="$5000"
+      className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    </div>
+    </div>
+
+    <div className="col-span-2 flex justify-end">
+      
+    </div>
+  </form>
+</div>) : ( <div></div>
+
+)}
+
+{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
+</div>     
             )}
              </div>
         ))}
