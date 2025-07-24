@@ -3,10 +3,14 @@
 import React, { useEffect, useState } from "react"
 import BankForm from "./bankForm"
 import CreditForm from "./creditForm"
+import { v4 as uuidv4 } from 'uuid';
+import { useAccounts } from "./context/AccountsContext"; // adjust path if needed
+
 
 function ExpenseAccount(){
   const [designatedAccount, setdesignatedAccount] =useState(null)
-    const [account, setAccounts] = useState([])
+  const { accounts, setAccounts } = useAccounts(); // instead of useState()
+
     const [accountName, setaccountName] = useState("")
     const [accountType, setaccountType] = useState("")
     //Bank Account info
@@ -23,7 +27,10 @@ function ExpenseAccount(){
     const [formIsHidden, setformIsHidden] = useState(false)
     const [hasLoaded, setHasLoaded] = useState(false);
 //Editing Functionalities
-    const [isEditing, setIsEditing] = useState (false)  
+    const [isEditing, setIsEditing] = useState (false)
+    const [editingIndex, seteditingIndex] = useState(null)  
+
+   
    
 //UI Hidden
     const handleClick = () => {  
@@ -34,6 +41,12 @@ function ExpenseAccount(){
       event.preventDefault();
     setformIsHiddenn(!formIsHidden)
 };
+
+//editing form
+const startEditing = () => {
+  event.preventDefault();
+  setIsEditing(!isEditing)
+}
 
 //load Data from local Storage
 useEffect(() => {
@@ -47,8 +60,8 @@ useEffect(() => {
 //save Data to local Storage
 useEffect(() => {
   if (hasLoaded) {
-  localStorage.setItem("submittedAccountData", JSON.stringify(account))
-}}, [account, hasLoaded])
+  localStorage.setItem("submittedAccountData", JSON.stringify(accounts))
+}}, [accounts, hasLoaded])
 
 //function to update accounts
 const handleBankDataSubmit = (data) =>{
@@ -60,7 +73,7 @@ setAccounts((prevData) => [...prevData, data])
 }
 //delete function
 const deleteAccount = (index) =>{
-  const newAccounts = account.filter((_,i) => i !== index);
+  const newAccounts = accounts.filter((_,i) => i !== index);
   setAccounts(newAccounts)
 }
     const accountComponents = [
@@ -86,8 +99,11 @@ function returnLogo(object){
   return companyLogo
 }
 //ACCOUNTS EDIT PROGRAM
+console.log("accounts:", accounts)
+
+
 return(
-<div className="px-8 py-6 ">
+<div className="px-8 py-6">
          <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
@@ -145,20 +161,22 @@ return(
 
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
-<div className="flex flex-col bg-pink-200 space-y-4 w-3/5 overflow-y-auto max-h-[1000px]">
-{account.map((acc, index) => (
+<div className="inline-flex flex-col space-y-4 min-w-[37%] overflow-y-auto max-h-[1000px] bg-amber-200">
+{accounts.map((acc, index) => (
           <div
             key={index}
-            className="w-full bg-white shadow mb-2 rounded p-4 border border-gray-200"
+            className="w-full mb-2 rounded p-4 bg-amber-700"
           >
             {acc.creditType ? (
                   acc.creditType === "CreditCard" ? (
                 //Credit card UI
-                <div id="creditContainer" className="flex justify-between 0">
-                 <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 text-white rounded-2xl shadow-xl p-6 w-full max-w-md h-56 relative overflow-hidden">
+                <div id="creditContainer" className="flex bg-amber-600">
+                 <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 
+                 text-white rounded-2xl shadow-xl p-6 w-full max-w-md h-56 relative overflow-hidden 
+                 min-w-[455px] mr-2">
 
     {/* Top Row: Bank or Card Name */}
-    <div className="flex justify-between items-center mb-4 ">
+    <div className="flex justify-between items-center mb-4">
       <h2 className="text-lg font-semibold">{acc.accountName}</h2>
       <span className="text-sm italic opacity-80">{acc.creditCardType}</span>
     </div>
@@ -187,9 +205,9 @@ return(
        {/* INFO SHEET*/}
       <div
   id="infoSheet"
-  className="bg-white flex justify-between items-center border border-gray-300 rounded-2xl shadow-md p-6 space-x-4"
+  className="bg-white flex justify-between items-center border border-gray-300 rounded-2xl shadow-md p-6 space-x-4 mr-2"
 >
-  {/* Left Section */}
+  {/* left Section */}
   <div className="flex flex-col justify-center">
     <h2 className="text-sm text-gray-500">Balance</h2>
     <p className="text-2xl font-bold text-gray-800">${acc.balance ?? "9999"}</p>
@@ -223,7 +241,7 @@ return(
 
     <div className="flex justify-end ">
     <button
-      onClick={() => deleteAccount(index)}
+      onClick={() => {startEditing(); seteditingIndex(acc.id);} }
       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
     >
       Edit
@@ -231,7 +249,7 @@ return(
   </div>
     </div>
 
-    {isEditing ? (<div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+    {isEditing && editingIndex === acc.id ? (<div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
   <form className="gap-4 items-center">
     <div className="flex justify-between">
     <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account & Card</h2>
@@ -298,8 +316,8 @@ return(
  </div>
     ) : (
     //LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI LINE OF CREDIT UI
-    <div className="flex justify-between">
-        <div className="bg-gradient-to-br from-gray-100 to-white border border-gray-300 rounded-2xl shadow-md p-6 w-full max-w-2xl">
+    <div className="flex ">
+        <div className="bg-gradient-to-br from-gray-100 to-white border border-gray-300 rounded-2xl shadow-md p-6 w-full max-w-2xl mr-2 min-w-[675px]">
   {/* Header: Account Name & Credit Type */}
   <div className="flex justify-between items-center mb-4">
     <h2 className="text-xl font-semibold text-gray-800">{acc.accountName}</h2>
@@ -355,7 +373,7 @@ return(
 
     <div className="flex justify-end ">
     <button
-      onClick={() => deleteAccount(index)}
+      onClick={() =>  {startEditing(); seteditingIndex(acc.id);}}
       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
     >
       Edit
@@ -363,7 +381,7 @@ return(
     </div>
   </div>
 
-{isEditing ? (<div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+{isEditing && editingIndex === acc.id  ? (<div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
   <form className="gap-4 items-center">
     <div className="flex justify-between">
     <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account & Card</h2>
@@ -427,16 +445,13 @@ return(
   </form>
 </div>): (<div></div>) }
 
-
-
-  
 </div>
         )
             ) : (
              
               <div className="flex w-full">
               <div className="flex w-full max-w-3xl">
-           <div className="bg-white border border-gray-300 rounded-xl shadow-md p-5 h-full w-full 
+           <div className="bg-white border border-gray-300 rounded-xl shadow-md p-5 h-full w-full mr-2 min-w-[675px] 
              ">
   {/* Header */}
   <div className="flex justify-between items-center mb-3">
@@ -477,7 +492,7 @@ return(
 
     <div className="flex justify-end ">
     <button
-      onClick={() => deleteAccount(index)}
+      onClick={() => {startEditing(); seteditingIndex(acc.id);}}
       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
     >
       Edit
@@ -489,7 +504,7 @@ return(
   {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
   {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
   {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
-  { isEditing ? (  <div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
+  { isEditing && editingIndex === acc.id  ? (  <div className="min-w-[450px] mx-auto bg-white border border-gray-200 rounded-2xl shadow-md p-4">
   <form className="gap-4 items-center">
     <div className="flex justify-between">
     <h2 className="col-span-2 text-xl font-semibold text-gray-700">Edit Account & Card</h2>

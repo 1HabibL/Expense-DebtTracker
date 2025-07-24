@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import InputForm from './inputForm';
+import CreditForm from './creditForm';
+import BankForm from './bankForm';
+import { useAccounts } from './context/AccountsContext';
+
 
 function ExpenseForm({ expenses, setExpenses }) {
     //const [expenses, setExpenses] = useState([])
@@ -21,7 +25,12 @@ function ExpenseForm({ expenses, setExpenses }) {
      const [editedAmount, setEditedAmount] = useState ("")
      const [editedCategory, setEditedCategory] = useState ("")
      const [editedDate, setEditedDate] = useState ("")
+     const [editedAccount, setEditedAccount] = useState ("")
      const [editIndex, setEditIndex] = useState(null);
+    const { accounts } = useAccounts();
+console.log("Accounts from context:", accounts);
+
+
 
 //function for hiding and veiwing filter form
 const handleClickFilter = () => {
@@ -102,6 +111,7 @@ expenseName: editedName,
 amount: editedAmount,
 category: editedCategory,
 date: editedDate,
+account: editedAccount
 }
   setExpenses(updatedExpenses)
  
@@ -116,6 +126,7 @@ const handleEditButtonClick = (index) => {
     setEditedAmount(selectedExpense.amount);
     setEditedCategory(selectedExpense.category);
     setEditedDate(selectedExpense.date);
+    setEditedAccount(selectedExpense.account)
     setEditIndex(index);
     setIsEditing(true);
 }
@@ -125,10 +136,14 @@ const cancelEdit = (index) => {
     // Copy of current expenses array
     setIsEditing(false);
   setEditIndex(null);
+
+  console.log("Current expenses from expenseform:", expenses);
  
 }
     return (
+
         <div className='w-full'>
+
              <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
@@ -335,6 +350,30 @@ const cancelEdit = (index) => {
               {expense.category}
             </div>
           )}
+
+          {/* Account */}
+        {editIndex === index ? (
+            <select
+        value={editedAccount}
+        onChange={(e) => setEditedAccount(e.target.value)}
+        name="account"
+        id="account"
+        className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+      >
+       {accounts.length > 0 ? (
+        accounts.map((acc, index) => (
+            <option  key={index} value={acc.accountName}>{acc.accountName}</option>
+        ))
+         ) : (
+          <option disabled>No accounts selected</option>)
+       }
+      </select>
+          ) : (
+            <div className="flex-1 min-w-[120px] text-yellow-800">
+              {expense.account}
+            </div>
+          )}
+
 
           {/* Date */}
           {editIndex === index ? (

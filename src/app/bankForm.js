@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-
+import { v4 as uuidv4 } from 'uuid';
 function BankForm({ isHidden, setIsHidden, onSubmit}){
     const [bankData, setbankData] = useState()
     const [accountName, setaccountName] = useState("")
@@ -26,6 +26,7 @@ const handleClickFilter = () => {
             accountName: accountName,
             financialInstitution: financialInstitution,
             balance: balance,
+            id: uuidv4()
         }
 
         onSubmit(passedBankData);

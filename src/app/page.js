@@ -9,6 +9,8 @@ import NavBar from "./navbar";
 import SideBar from "./sideBar";
 import DisplayExpense from "./expenseDisplay";
 import ExpenseAccount from "./expenseAccounts"
+import { AccountsProvider } from './context/AccountsContext';
+
 
 
 export default function Home() {
@@ -56,6 +58,7 @@ useEffect(() => {
 
 return(
     <div className="bg-[#f8f9fa]">
+       <AccountsProvider>
       <NavBar />
         <div className="flex relative">
         <SideBar  designatedComponent={designatedComponent} setdesignatedComponent={setdesignatedComponent} />
@@ -90,6 +93,7 @@ return(
             </div>
           {/*COMPONENT A1 */}           {/*COMPONENT A1 */}          {/*COMPONENT A1 */}          
         </div>
+        </AccountsProvider>
     </div>
   )
 }

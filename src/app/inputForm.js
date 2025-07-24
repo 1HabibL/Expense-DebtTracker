@@ -2,6 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import ExpenseForm from "./expenseform";
+import CreditForm from './creditForm';
+import BankForm from './bankForm';
+import { useAccounts } from './context/AccountsContext';
 
 function InputForm({ expenses, setExpenses }) {
     //const [expenses, setExpenses] = useState([])
@@ -12,6 +15,8 @@ function InputForm({ expenses, setExpenses }) {
     const [additionalNotes, setAdditionalNotes] = useState("")
     const [isHidden,setIsHidden] = useState(true)
     const [filterIsHidden, setFilterIsHidden] = useState(true)
+    const [account,  setAccount] = useState("");
+    const { accounts } = useAccounts();
 
 //function for hiding and veiwing expense form
 const handleClick = () => {
@@ -54,6 +59,8 @@ useEffect(() => {
         setDate("");
         setAdditionalNotes("");
         setExpenseName("");
+         setAccount("");
+
      }
 //function to handle form submission
         const newExpense = (event) => {
@@ -64,7 +71,8 @@ useEffect(() => {
             amount: amount,
             category: category,
             date: date,
-            additionalNotes: additionalNotes
+            additionalNotes: additionalNotes,
+            account: account
         }
 
         setExpenses((prevData) => [...prevData, passedData])
@@ -81,6 +89,9 @@ const clearData = () =>{
         //localStorage code
 
  //Function to edit Expenses in Expense LIst
+  console.log("Current expenses from inputForm:", expenses);
+  console.log("Updated accounts:", accounts);
+
 
     return (
         <div>
@@ -173,22 +184,19 @@ const clearData = () =>{
       Account
     </label>
    <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        name="category"
-        id="category"
+        value={account}
+        onChange={(e) => setAccount(e.target.value)}
+        name="account"
+        id="account"
         className="rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
       >
-        <option value="">Select</option>
-        <option value="Food">Food</option>
-        <option value="Transportation">Transportation</option>
-        <option value="Entertainment">Entertainment</option>
-        <option value="Utilities">Utilities</option>
-        <option value="Health">Health</option>
-        <option value="Insurance">Insurance</option>
-        <option value="Education">Education</option>
-        <option value="Rent">Rent</option>
-        <option value="Miscellaneous">Miscellaneous</option>
+       {accounts.length > 0 ? (
+        accounts.map((acc, index) => (
+            <option  key={index} value={acc.accountName}>{acc.accountName}</option>
+        ))
+         ) : (
+          <option disabled>No accounts created</option>)
+       }
       </select>
     <label htmlFor="additionalNotes" className="text-sm font-medium text-gray-700 mb-2 block">
       Additional Notes

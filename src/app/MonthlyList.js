@@ -32,7 +32,7 @@ function MonthlyexpenseForm({ expenses, setExpenses }) {
     month: "long",
     year: "numeric"
 })
-console.log("todaysDate:",todaysDate)
+//console.log("todaysDate:",todaysDate)
 
 const incrementMonth = () => setMonthCounter(prev => prev + 1)
 const decrementMonth = () => setMonthCounter(prev => prev - 1)
@@ -41,17 +41,17 @@ const decrementMonth = () => setMonthCounter(prev => prev - 1)
     year: "numeric",
     month: "long"
     })
-    console.log("formattedTodaysMonth", formattedTodaysMonth)
+    //console.log("formattedTodaysMonth", formattedTodaysMonth)
 
     let nextMonthPreperation = new Date(`${formattedTodaysMonth}-01`)
-  console.log("nextMonthPreperation", nextMonthPreperation)
+  //console.log("nextMonthPreperation", nextMonthPreperation)
     nextMonthPreperation.setMonth(nextMonthPreperation.getMonth() + (monthCounter))
 
 const formattedDesignatedMonths = nextMonthPreperation.toLocaleDateString("en-US",{
     year: "numeric",
     month: "long"
     })
-    console.log("formattedDesignatedMonths:", formattedDesignatedMonths)
+    //console.log("formattedDesignatedMonths:", formattedDesignatedMonths)
         function checkDate(targetExp){
         const processedEXPdate = new Date(targetExp)
         const formattedExpenseMonth = processedEXPdate.toLocaleDateString("en-US",{
