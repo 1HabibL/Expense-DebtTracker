@@ -15,7 +15,7 @@ function InputForm({ expenses, setExpenses }) {
     const [additionalNotes, setAdditionalNotes] = useState("")
     const [isHidden,setIsHidden] = useState(true)
     const [filterIsHidden, setFilterIsHidden] = useState(true)
-    const [account,  setAccount] = useState("");
+    const [account, setAccount] = useState("");
     const { accounts } = useAccounts();
 
 //function for hiding and veiwing expense form
@@ -86,6 +86,15 @@ const clearData = () =>{
     localStorage.removeItem("submittedExpenseData")
     setExpenses([]);
 }
+
+useEffect(() => {
+  if (accounts.length > 0 && account === "") {
+    setAccount(accounts[0].accountName);
+  }
+}, [accounts]);
+
+
+
         //localStorage code
 
  //Function to edit Expenses in Expense LIst

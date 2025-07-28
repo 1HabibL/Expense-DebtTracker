@@ -26,6 +26,8 @@ const handleClickFilter = () => {
             creditCardType: creditCardType,
             lastFour: lastFour,
             creditLimit: creditLimit,
+            balance: 0,
+            accountType: 'credit',
             id: uuidv4()
         }
 

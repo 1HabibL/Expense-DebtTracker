@@ -26,6 +26,7 @@ const handleClickFilter = () => {
             accountName: accountName,
             financialInstitution: financialInstitution,
             balance: balance,
+            accountType: 'bank',
             id: uuidv4()
         }
 

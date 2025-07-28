@@ -5,9 +5,12 @@ import BankForm from "./bankForm"
 import CreditForm from "./creditForm"
 import { v4 as uuidv4 } from 'uuid';
 import { useAccounts } from "./context/AccountsContext"; // adjust path if needed
+import { accountBalance,  creditProgram } from "./accountsAlgos";
+import AccountsExpenses  from "./accountsList";
+import ExpenseForm from "./expenseform";
 
 
-function ExpenseAccount(){
+function ExpenseAccount({ expenses, setExpenses }){
   const [designatedAccount, setdesignatedAccount] =useState(null)
   const { accounts, setAccounts } = useAccounts(); // instead of useState()
 
@@ -25,22 +28,28 @@ function ExpenseAccount(){
     //UI Functionalities
     const [isHidden,setIsHidden] = useState(true)
     const [formIsHidden, setformIsHidden] = useState(false)
+     const [listIsHidden, setlistIsHidden] = useState(false)
     const [hasLoaded, setHasLoaded] = useState(false);
 //Editing Functionalities
     const [isEditing, setIsEditing] = useState (false)
     const [editingIndex, seteditingIndex] = useState(null)  
 
-   
-   
 //UI Hidden
     const handleClick = () => {  
       event.preventDefault();
     setIsHidden(!isHidden)
+setlistIsHidden(!listIsHidden)
 };
     const handleCancelClick = () => {
       event.preventDefault();
-    setformIsHiddenn(!formIsHidden)
+    setformIsHidden(!formIsHidden)
 };
+
+const hideExpenselist = () => {
+  event.preventDefault
+  setlistIsHidden(!listIsHidden)
+
+}
 
 //editing form
 const startEditing = () => {
@@ -100,10 +109,11 @@ function returnLogo(object){
 }
 //ACCOUNTS EDIT PROGRAM
 console.log("accounts:", accounts)
-
+ accountBalance(expenses, accounts)
 
 return(
-<div className="px-8 py-6">
+  <div className="flex justify-between">
+<div className="py-6">
          <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
@@ -200,7 +210,6 @@ return(
       </div>
     </div>
 
-
        </div>
        {/* INFO SHEET*/}
       <div
@@ -210,10 +219,10 @@ return(
   {/* left Section */}
   <div className="flex flex-col justify-center">
     <h2 className="text-sm text-gray-500">Balance</h2>
-    <p className="text-2xl font-bold text-gray-800">${acc.balance ?? "9999"}</p>
+    <p className="text-2xl font-bold text-gray-800">${acc.balance}</p>
 
     <h2 className="text-sm mt-4 text-gray-500">Credit Limit</h2>
-    <p className="text-2xl font-bold text-gray-800">${acc.creditLimit ?? "9999"}</p>
+    <p className="text-2xl font-bold text-gray-800">${acc.creditLimit}</p>
   </div>
 
   {/* Vertical Divider */}
@@ -222,7 +231,8 @@ return(
   {/* Right Section */}
   <div className="flex flex-col justify-center items-center">
     <p className="text-3xl font-extrabold text-purple-600">
-      {acc.utilization ?? "45%"}
+      {((acc.balance/acc.creditLimit)*100).toFixed(2)}
+      %
     </p>
     <p className="text-sm text-gray-600">Utilization</p>
   </div>
@@ -241,7 +251,7 @@ return(
 
     <div className="flex justify-end ">
     <button
-      onClick={() => {startEditing(); seteditingIndex(acc.id);} }
+      onClick={() => {startEditing(); seteditingIndex(acc.id);  hideExpenselist();} }
       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
     >
       Edit
@@ -328,13 +338,13 @@ return(
   <div className="grid grid-cols-3 gap-6 text-center">
     
     <div>
-      <p className="text-2xl font-mono text-gray-800">${acc.balance ?? "9999"}</p>
+      <p className="text-2xl font-mono text-gray-800">${acc.balance}</p>
       <hr className="border-t border-gray-400 my-2 w-3/4 mx-auto" />
       <p className="text-sm text-gray-600">Balance</p>
     </div>
 
     <div>
-      <p className="text-2xl font-mono text-gray-800">{acc.utilization ?? "45%"}%</p>
+      <p className="text-2xl font-mono text-gray-800">{((acc.balance/acc.creditLimit)*100).toFixed(2)}%</p>
       <hr className="border-t border-gray-400 my-2 w-3/4 mx-auto" />
       <p className="text-sm text-gray-600">Utilization</p>
     </div>
@@ -373,7 +383,7 @@ return(
 
     <div className="flex justify-end ">
     <button
-      onClick={() =>  {startEditing(); seteditingIndex(acc.id);}}
+      onClick={() =>  {startEditing(); seteditingIndex(acc.id); hideExpenselist();}}
       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
     >
       Edit
@@ -492,7 +502,7 @@ return(
 
     <div className="flex justify-end ">
     <button
-      onClick={() => {startEditing(); seteditingIndex(acc.id);}}
+      onClick={() => {startEditing(); seteditingIndex(acc.id);  hideExpenselist();}}
       className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow transition"
     >
       Edit
@@ -575,19 +585,21 @@ return(
     </div>
   </form>
 </div>) : ( <div></div>
-
 )}
+{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
 
-{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
-{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
-{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
-{/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
 {/*EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM EDIT FORM*/}
 </div>     
             )}
              </div>
         ))}
+</div>
+</div>
 
+<div id="accountsExpenseList" className={`bg-amber-30 ${
+      listIsHidden ? 'opacity-0 max-h-0 overflow-hidden' : 'opacity-100 max-h-[1000px]'
+    }`}>
+<AccountsExpenses expenses={expenses} setExpenses={setExpenses} />
 </div>
 </div>
 )

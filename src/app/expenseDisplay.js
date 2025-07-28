@@ -49,13 +49,13 @@ let weeklyAmount = weeklySums(expenses, todaysDate)
  let annualAmount = annualSums(expenses, todaysDate)
  let todaysAmount1 = todaysSums(expenses, todaysDate)
 return (
-<div className="w-full py-10 bg-gray-50">
+<div className="w-full py-10 bg-amber-50">
   <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">💸 Expense Dashboard</h1>
 
-  <div className="flex flex-col lg:flex-row justify-center gap-10 px-6">
+  <div className="flex flex-col lg:flex-row justify-center gap-10">
 
     {/* Left: Summary Cards */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full lg:w-3/4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1800] w-full lg:w-3/4">
 
       {/* Total Spend */}
       <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center">
