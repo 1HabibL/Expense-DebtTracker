@@ -72,8 +72,7 @@ useEffect(() => {
             category: category,
             date: date,
             additionalNotes: additionalNotes,
-            account: account,
-            transactionType : "expense"
+            account: account
         }
 
         setExpenses((prevData) => [...prevData, passedData])

@@ -130,7 +130,6 @@ const handleEditButtonClick = (index) => {
     setEditIndex(index);
     setIsEditing(true);
 }
- 
 
 const cancelEdit = (index) => {
     // Copy of current expenses array

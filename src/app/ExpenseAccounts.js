@@ -20,7 +20,9 @@ function ExpenseAccount({ expenses, setExpenses }){
      const [bankAccountType, setbankAccountType] = useState("")
     const [financialInstitution, setfinancialInstitution] = useState("")
     const [balance, setBalance] = useState("")
+    const [initialbalance, setinitialBalance] = useState("")
     const [directDeposit, setdirectDeposit] = useState("")
+    const [fundsDeposit, setfundsDeposit] = useState("")
     //credit card Info
     const[creditCardNumber, setcreditCardNumber] = useState("")
     const [creditCardType, setcreditCardType] = useState ("")
@@ -32,6 +34,12 @@ function ExpenseAccount({ expenses, setExpenses }){
     const [hasLoaded, setHasLoaded] = useState(false);
 //Editing Functionalities
     const [isEditing, setIsEditing] = useState (false)
+    const [editedaccountName, setEditedaccountName] = useState ("")
+    const [editedfinancialInstitution, setEditedfinancialInstitution] = useState("")
+    const [editedbalance, setEditedbalance] = useState ("")
+    const [editedCreditLimit, setEditedCreditLimit] = useState ("")
+    const [editedLastFour, setEditedLastFour] = useState ("")
+    const [editedCardType, setEditedCardType] = useState ("")
     const [editingIndex, seteditingIndex] = useState(null)  
 
 //UI Hidden
@@ -48,6 +56,21 @@ setlistIsHidden(!listIsHidden)
 const hideExpenselist = () => {
   event.preventDefault
   setlistIsHidden(!listIsHidden)
+
+}
+
+const handleEdit = (index) => {
+
+//EDITING AND UPDATING ACCOUNTS
+updatedAccounts[index] = {
+accountName: editedaccountName,
+creditLimit: editedCreditLimit,
+category: editedCategory,
+lastFour: editedLastFour,
+cardType: editedCardType,
+depositedFunds : depositedFunds
+}
+setExpenses(updatedAccounts)
 
 }
 
@@ -107,9 +130,13 @@ function returnLogo(object){
   let companyLogo = logoMap.filter((logoInfo) => logoInfo.company === object)
   return companyLogo
 }
+
+
+
 //ACCOUNTS EDIT PROGRAM
 console.log("accounts:", accounts)
  accountBalance(expenses, accounts)
+
 
 return(
   <div className="flex justify-between">
@@ -475,7 +502,12 @@ return(
   {/* Balance Section */}
   <div className="flex justify-between items-center mb-3">
     <p className="text-sm text-gray-600">Balance</p>
-    <p className="text-lg font-bold text-green-600">${acc.balance}</p>
+    <p className="text-lg font-bold text-green-600">$  {
+    Array.isArray(expenses) &&
+    expenses.some(e => e.account === acc.accountName)
+      ? acc.updatedBalance
+      : acc.balance
+  }</p>
   </div>
 
 
@@ -571,7 +603,7 @@ return(
       className="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
     />
 
-    <label className="text-sm font-medium text-gray-600">New Balance</label>
+    <label className="text-sm font-medium text-gray-600">Deposit Funds</label>
     <input
       type="number"
       placeholder="$5000"

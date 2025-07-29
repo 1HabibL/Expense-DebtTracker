@@ -10,7 +10,10 @@ function BankForm({ isHidden, setIsHidden, onSubmit}){
      const [bankAccountType, setbankAccountType] = useState("")
     const [financialInstitution, setfinancialInstitution] = useState("")
     const [accountNumber, setaccountNumber] = useState("")
-    const [balance, setBalance] = useState("")
+    const [initialbalance, setinitialBalance] = useState("")
+    const [moneyIn, setMoneyIn] = useState("")
+    const [moneyOut, setMoneyOut] = useState("")
+    const [updatedBalance, setupdatedBalance] = useState("")
     const [directDeposit, setdirectDeposit] = useState("")
  
     const handleClick = () => {
@@ -25,7 +28,10 @@ const handleClickFilter = () => {
         const passedBankData = {
             accountName: accountName,
             financialInstitution: financialInstitution,
-            balance: balance,
+            balance: initialbalance,
+            moneyIn: moneyIn,
+           moneyOut: moneyOut,
+           updatedBalance: updatedBalance, 
             accountType: 'bank',
             id: uuidv4()
         }
@@ -101,8 +107,8 @@ return(<div>
         Balance
       </label>
       <input
-        value={balance}
-        onChange={(e) => setBalance(e.target.value)}
+        value={initialbalance}
+        onChange={(e) => setinitialBalance(e.target.value)}
         type="number"
         name="balance"
         id="balance"
