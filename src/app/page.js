@@ -35,7 +35,6 @@ const baseComponents = [
   {id: 'home',component: <MonthlyexpenseForm expenses={expenses} setExpenses={setExpenses}/>},
   {id: 'dashboards',component: <MonthlyexpenseForm expenses={expenses} setExpenses={setExpenses}/>},
   {id: 'accounts',component: <ExpenseAccount expenses={expenses} setExpenses={setExpenses} />}
-
 ]
 
 const forms = [

@@ -198,16 +198,16 @@ return(
 
 {/*ACOUNT ARRAY ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  ACCOUNTS ARRAY  */}
 
-<div className="inline-flex flex-col space-y-4 min-w-[37%] overflow-y-auto max-h-[1000px] bg-amber-200">
+<div className="inline-flex flex-col space-y-4 min-w-[37%] overflow-y-auto max-h-[1000px] bg-gray-200 rounded-2xl">
 {accounts.map((acc, index) => (
           <div
             key={index}
-            className="w-full mb-2 rounded p-4 bg-amber-700"
+            className="w-full mb-2 rounded p-4 "
           >
             {acc.creditType ? (
                   acc.creditType === "CreditCard" ? (
                 //Credit card UI
-                <div id="creditContainer" className="flex bg-amber-600">
+                <div id="creditContainer" className="flex">
                  <div className="bg-gradient-to-r from-indigo-600 via-purple-700 to-pink-600 
                  text-white rounded-2xl shadow-xl p-6 w-full max-w-md h-56 relative overflow-hidden 
                  min-w-[455px] mr-2">
@@ -487,7 +487,7 @@ return(
             ) : (
              
               <div className="flex w-full">
-              <div className="flex w-full max-w-3xl">
+              <div className="flex w-full max-w-2xl">
            <div className="bg-white border border-gray-300 rounded-xl shadow-md p-5 h-full w-full mr-2 min-w-[675px] 
              ">
   {/* Header */}
@@ -628,7 +628,7 @@ return(
 </div>
 </div>
 
-<div id="accountsExpenseList" className={`bg-amber-30 ${
+<div id="accountsExpenseList" className={`bg-amber-30  ${
       listIsHidden ? 'opacity-0 max-h-0 overflow-hidden' : 'opacity-100 max-h-[1000px]'
     }`}>
 <AccountsExpenses expenses={expenses} setExpenses={setExpenses} />

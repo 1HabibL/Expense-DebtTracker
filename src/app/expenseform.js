@@ -5,7 +5,7 @@ import InputForm from './inputForm';
 import CreditForm from './creditForm';
 import BankForm from './bankForm';
 import { useAccounts } from './context/AccountsContext';
-
+import { exportToExcel } from './exportUtils'; // a
 
 function ExpenseForm({ expenses, setExpenses }) {
     //const [expenses, setExpenses] = useState([])
@@ -148,7 +148,6 @@ const cancelEdit = (index) => {
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"></link>
             
   {/* EXPENSE LIST STARTES HERE */}
-  
   {/* EXPENSE LIST STARTES HERE */}
 
 <div
@@ -427,6 +426,21 @@ const cancelEdit = (index) => {
     </ul>
   </div>
 </div>    
+
+<button
+  className="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700"
+  onClick={() => exportToExcel(expenses, "MyExpenses.xlsx", "Expenses")}
+>
+  Export Expenses to Excel
+</button>
+
+<button
+  className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 ml-2"
+  onClick={() => exportToExcel(accounts, "MyAccounts.xlsx", "Accounts")}
+>
+  Export Accounts to Excel
+</button>
+
         </div>
 )
 
